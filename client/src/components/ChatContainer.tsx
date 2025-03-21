@@ -56,7 +56,9 @@ export default function ChatContainer({ messages, isLoading, onFeedback }: ChatC
         return (
           <div key={`msg-${message.id}`}>
             <PrescriptionResult 
-              medications={message.metadata?.medications || []} 
+              medications={message.metadata?.medications || []}
+              unreadableImage={message.metadata?.unreadableImage}
+              additionalInfo={message.metadata?.additionalInfo}
             />
             <FeedbackOptions onFeedback={(isAccurate) => onFeedback(message.id, isAccurate)} />
           </div>
