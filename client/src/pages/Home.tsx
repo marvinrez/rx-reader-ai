@@ -47,21 +47,21 @@ export default function Home() {
     onError: (error: any) => {
       setIsLoading(false);
       
-      // Determinar o tipo de alerta com base no tipo de erro
+      // Determine alert type based on error type
       let variant: "default" | "destructive" | "warning" = "destructive";
-      let title = "Erro na análise da prescrição";
+      let title = "Error analyzing prescription";
       
       if (error.type === 'size') {
         variant = "warning";
-        title = "Imagem muito grande";
+        title = "Image too large";
       } else if (error.type === 'api') {
         variant = "destructive";
-        title = "Erro da API OpenAI";
+        title = "OpenAI API Error";
       }
       
       toast({
         title: title,
-        description: error.message || "Falha ao analisar a imagem. Por favor, tente novamente.",
+        description: error.message || "Failed to analyze the image. Please try again.",
         variant: variant
       });
     }
@@ -86,18 +86,18 @@ export default function Home() {
       ]);
     },
     onError: (error: any) => {
-      // Determinar o tipo de alerta com base no tipo de erro
+      // Determine alert type based on error type
       let variant: "default" | "destructive" | "warning" = "destructive";
-      let title = "Erro ao enviar mensagem";
+      let title = "Error sending message";
       
       if (error.type === 'api') {
         variant = "destructive";
-        title = "Erro da API OpenAI";
+        title = "OpenAI API Error";
       }
       
       toast({
         title: title,
-        description: error.message || "Falha ao enviar sua mensagem. Por favor, tente novamente.",
+        description: error.message || "Failed to send your message. Please try again.",
         variant: variant
       });
     }
@@ -110,8 +110,8 @@ export default function Home() {
     },
     onSuccess: () => {
       toast({
-        title: "Feedback enviado",
-        description: "Obrigado pelo seu feedback! Isso nos ajuda a melhorar.",
+        title: "Feedback submitted",
+        description: "Thank you for your feedback! It helps us improve.",
       });
     }
   });
@@ -140,7 +140,7 @@ export default function Home() {
     setIsModalOpen(true);
   };
 
-  // Função para comprimir imagem antes do envio
+  // Function to compress image before sending
   const compressImage = async (base64Image: string): Promise<string> => {
     return new Promise((resolve) => {
       const img = new Image();
@@ -148,7 +148,7 @@ export default function Home() {
       img.onload = () => {
         const canvas = document.createElement('canvas');
         
-        // Calcular dimensões máximas de 1200px mantendo proporção
+        // Calculate maximum dimensions of 1200px while maintaining aspect ratio
         let width = img.width;
         let height = img.height;
         const MAX_SIZE = 1200;
@@ -167,7 +167,7 @@ export default function Home() {
         const ctx = canvas.getContext('2d');
         ctx?.drawImage(img, 0, 0, width, height);
         
-        // Qualidade 0.7 para JPEG
+        // Quality 0.7 for JPEG
         const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
         resolve(compressedDataUrl);
       };
@@ -178,7 +178,7 @@ export default function Home() {
     // Close modal
     setIsModalOpen(false);
 
-    // Comprimir imagem antes de exibir e enviar
+    // Compress image before displaying and sending
     const compressedImage = await compressImage(base64Image);
 
     // Add image message
@@ -202,7 +202,7 @@ export default function Home() {
         id: Date.now() + 1,
         prescriptionId: null,
         type: 'ai',
-        content: "Vou ajudar você a entender como ler essas informações—só um momento.",
+        content: "I'll help you understand how to read this info—just a moment.",
         metadata: null,
         createdAt: new Date()
       }
@@ -228,29 +228,29 @@ export default function Home() {
             id: Date.now(),
             prescriptionId: null,
             type: 'ai',
-            content: `# Ajuda & Perguntas Frequentes do RX Reader
+            content: `# RX Reader Help & FAQs
 
-### Como usar o RX Reader:
-1. Envie uma imagem clara da sua receita usando o ícone de clipe de papel
-2. Aguarde enquanto a IA analisa a escrita
-3. Revise as informações decodificadas dos medicamentos
-4. Faça perguntas adicionais sobre seus medicamentos
+### How to use RX Reader:
+1. Upload a clear image of your prescription using the paperclip icon
+2. Wait for the AI to analyze the handwriting
+3. Review the decoded medication information
+4. Ask any follow-up questions about your medications
 
-### Perguntas Frequentes:
+### Frequently Asked Questions:
 
-**P: Qual é a precisão da leitura de receitas?**
-R: O RX Reader usa IA avançada para interpretar receitas, mas a precisão pode variar dependendo da qualidade da imagem. Sempre verifique com seu médico ou farmacêutico.
+**Q: How accurate is the prescription reading?**
+A: RX Reader uses advanced AI to interpret prescriptions, but accuracy may vary depending on image quality. Always verify with your healthcare provider.
 
-**P: Meus dados de prescrição são privados?**
-R: Sim, seus dados de prescrição são processados com segurança e não são armazenados permanentemente.
+**Q: Is my prescription data private?**
+A: Yes, your prescription data is processed securely and not stored permanently.
 
-**P: E se o aplicativo não conseguir ler minha receita?**
-R: Tente tirar uma foto mais clara com boa iluminação, ou peça orientação diretamente à IA.
+**Q: What if the app can't read my prescription?**
+A: Try taking a clearer photo with good lighting, or ask the AI for guidance directly.
 
-**P: O aplicativo pode fornecer conselhos médicos?**
-R: Não, o RX Reader apenas ajuda a decodificar receitas. Sempre consulte um profissional de saúde para aconselhamento médico.
+**Q: Can the app provide medical advice?**
+A: No, RX Reader only helps decode prescriptions. Always consult with a healthcare professional for medical advice.
 
-**Como mais posso ajudar você hoje?**`,
+**How else can I help you today?**`,
             metadata: null,
             createdAt: new Date()
           }
