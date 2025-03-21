@@ -1,0 +1,36 @@
+
+/* Mobile-first styles */
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+body {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  overscroll-behavior: none;
+}
+
+input, textarea {
+  font-size: 16px; /* Prevents iOS zoom */
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+button, a {
+  min-height: 44px; /* iOS minimum touch target size */
+  min-width: 44px;
+  padding: 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .touch-scroll {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+  }
+  
+  .prevent-overflow {
+    overflow-x: hidden;
+  }
+}
