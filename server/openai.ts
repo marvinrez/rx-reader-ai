@@ -66,18 +66,38 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
     instructions?: string;
   }>;
   additionalInfo?: string;
+  unreadableImage?: boolean;
 }> {
   try {
+    // First, check if the analysis indicates that the image was unreadable
+    const unreadableIndicators = [
+      "cannot read", "unreadable", "illegible", "unclear", "not legible", 
+      "can't make out", "difficult to read", "unable to read", "not clear enough",
+      "too blurry", "poor quality", "can't see"
+    ];
+    
+    const isUnreadable = unreadableIndicators.some(indicator => 
+      analysisText.toLowerCase().includes(indicator)
+    );
+    
+    if (isUnreadable) {
+      return {
+        medications: [],
+        unreadableImage: true,
+        additionalInfo: "The prescription image is difficult to read. Please upload a clearer image with better lighting."
+      };
+    }
+
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
         {
           role: "system",
-          content: "You are an AI specialized in extracting structured medication information from prescription analyses. Extract the medication names, dosages, and instructions into a structured format."
+          content: "You are an AI specialized in extracting structured medication information from prescription analyses. Extract the medication names, dosages, and instructions into a structured format. If the image appears to be unreadable or doesn't contain a valid prescription, indicate this in your response."
         },
         {
           role: "user",
-          content: `Extract the medication information from this prescription analysis into a structured JSON format with an array of medications. Each medication should have 'name', 'dosage', and optionally 'instructions' fields. You may also include an 'additionalInfo' field for any relevant notes. Here's the analysis:\n\n${analysisText}`
+          content: `Extract the medication information from this prescription analysis into a structured JSON format with an array of medications. Each medication should have 'name', 'dosage', and optionally 'instructions' fields. You may also include an 'additionalInfo' field for any relevant notes. If the prescription appears unreadable or invalid, set 'unreadableImage' to true. Here's the analysis:\n\n${analysisText}`
         }
       ],
       response_format: { type: "json_object" }
@@ -85,10 +105,29 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
 
     const result = JSON.parse(response.choices[0].message.content || "{}");
     
+    // Check if the AI identified the image as unreadable
+    if (result.unreadableImage) {
+      return {
+        medications: [],
+        unreadableImage: true,
+        additionalInfo: result.additionalInfo || "The prescription image couldn't be properly analyzed. Please upload a clearer image."
+      };
+    }
+    
+    // Check if we got a valid medication list
+    if (!Array.isArray(result.medications) || result.medications.length === 0) {
+      return {
+        medications: [],
+        unreadableImage: true,
+        additionalInfo: "No medications were detected in the image. Please upload a clearer image of a prescription."
+      };
+    }
+    
     // Ensure the response has the expected structure
     return {
-      medications: Array.isArray(result.medications) ? result.medications : [],
-      additionalInfo: result.additionalInfo || undefined
+      medications: result.medications,
+      additionalInfo: result.additionalInfo || undefined,
+      unreadableImage: false
     };
   } catch (error: any) {
     console.error("Error extracting medication info:", error);
@@ -105,8 +144,12 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
       throw new Error("Invalid OpenAI API key. Please update your API key.");
     }
     
-    // If it's another type of error, return empty structure
-    return { medications: [] };
+    // If it's another type of error, return empty structure with appropriate message
+    return { 
+      medications: [],
+      unreadableImage: true,
+      additionalInfo: "There was an error analyzing the prescription. Please try again with a clearer image."
+    };
   }
 }
 

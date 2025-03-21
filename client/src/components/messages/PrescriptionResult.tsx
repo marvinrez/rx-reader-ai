@@ -1,12 +1,14 @@
-import { Copy } from "lucide-react";
+import { Copy, AlertTriangle } from "lucide-react";
 import { Medication } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 
 interface PrescriptionResultProps {
   medications: Medication[];
+  unreadableImage?: boolean;
+  additionalInfo?: string;
 }
 
-export default function PrescriptionResult({ medications }: PrescriptionResultProps) {
+export default function PrescriptionResult({ medications, unreadableImage, additionalInfo }: PrescriptionResultProps) {
   const { toast } = useToast();
 
   const handleCopy = () => {
@@ -30,11 +32,28 @@ export default function PrescriptionResult({ medications }: PrescriptionResultPr
       });
   };
 
-  if (!medications || medications.length === 0) {
+  if (unreadableImage || !medications || medications.length === 0) {
     return (
       <div className="flex mb-2">
         <div className="bg-[#017171] text-white rounded-lg py-3 px-4 max-w-xs">
-          <p className="text-sm">No medications were detected in this prescription. Please try with a clearer image.</p>
+          <div className="flex items-start gap-2">
+            <AlertTriangle className="h-5 w-5 text-white shrink-0 mt-0.5" />
+            <div>
+              <p className="font-medium">Unable to read prescription</p>
+              <p className="text-sm mt-1">
+                {additionalInfo || "No medications were detected in this prescription. Please try with a clearer image with good lighting."}
+              </p>
+              <p className="text-sm mt-2">
+                Try these tips:
+              </p>
+              <ul className="text-sm list-disc pl-5 mt-1 space-y-1">
+                <li>Take the photo in a well-lit area</li>
+                <li>Ensure the prescription is flat and not creased</li>
+                <li>Hold the camera steady to avoid blur</li>
+                <li>Make sure all text is visible in the frame</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -76,6 +76,7 @@ export type Medication = z.infer<typeof medicationSchema>;
 export const prescriptionAnalysisSchema = z.object({
   medications: z.array(medicationSchema),
   additionalInfo: z.string().optional(),
+  unreadableImage: z.boolean().optional(),
 });
 
 export type PrescriptionAnalysis = z.infer<typeof prescriptionAnalysisSchema>;

@@ -39,7 +39,11 @@ export default function Home() {
           prescriptionId: null,
           type: 'prescription',
           content: 'Prescription analysis result',
-          metadata: { medications: data.medications },
+          metadata: { 
+            medications: data.medications,
+            unreadableImage: data.unreadableImage,
+            additionalInfo: data.additionalInfo
+          },
           createdAt: new Date()
         }
       ]);
