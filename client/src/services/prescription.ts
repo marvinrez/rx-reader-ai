@@ -23,7 +23,7 @@ export async function analyzePrescriptionImage(imageBase64: string): Promise<Pre
       errorType = 'size';
     }
     
-    // Customizar o objeto de erro para incluir o tipo
+    // Customize the error object to include the type
     const customError = new Error(message);
     (customError as any).type = errorType;
     
@@ -38,19 +38,19 @@ export async function sendMessage(content: string): Promise<{ response: string }
   } catch (error) {
     console.error('Error sending message:', error);
     
-    // Melhor tratamento de erros relacionados à API OpenAI
-    let message = error instanceof Error ? error.message : 'Falha ao enviar mensagem';
+    // Better handling of OpenAI API related errors
+    let message = error instanceof Error ? error.message : 'Failed to send message';
     let errorType: 'api' | 'general' = 'general';
     
     if (message.includes('quota') || message.includes('exceeded')) {
-      message = 'A cota da API OpenAI foi excedida. Entre em contato com o suporte para assistência.';
+      message = 'OpenAI API quota exceeded. Please contact support for assistance.';
       errorType = 'api';
     } else if (message.includes('api key') || message.includes('apiKey')) {
-      message = 'Chave API inválida. Entre em contato com o suporte para atualizar a chave API.';
+      message = 'Invalid API key. Please contact support to update the API key.';
       errorType = 'api';
     }
     
-    // Customizar o objeto de erro para incluir o tipo
+    // Customize the error object to include the type
     const customError = new Error(message);
     (customError as any).type = errorType;
     

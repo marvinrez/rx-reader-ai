@@ -9,25 +9,25 @@ interface UploadModalProps {
 }
 
 export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalProps) {
-  // Referências separadas para cada input
+  // Separate references for each input
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
   
   if (!isOpen) return null;
 
-  // Função para processar arquivos
+  // Function to process files
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       try {
         const dataUrl = await fileToDataURL(file);
         onUpload(dataUrl);
-        // Fechar o modal após upload
+        // Close modal after upload
         onClose();
       } catch (error) {
         console.error("Error converting file to data URL:", error);
       }
-      // Reset do input
+      // Reset input
       e.target.value = '';
     }
   };
