@@ -40,19 +40,19 @@ export async function analyzeImage(base64Image: string): Promise<string> {
   } catch (error: any) {
     console.error("OpenAI Vision API error:", error);
     
-    // Verificar se é um erro de cota excedida
+    // Check if error is related to quota exceeded
     if (error?.error?.type === 'insufficient_quota' || 
         (error?.message && error.message.includes('quota'))) {
-      throw new Error("OpenAI API quota excedida. Por favor, entre em contato com o suporte.");
+      throw new Error("OpenAI API quota exceeded. Please contact support for assistance.");
     }
     
-    // Verificar se é um erro de chave API
+    // Check if error is related to API key
     if (error?.error?.type === 'invalid_api_key' || 
         (error?.message && error.message.includes('api key'))) {
-      throw new Error("Chave API do OpenAI inválida. Por favor, atualize sua chave API.");
+      throw new Error("Invalid OpenAI API key. Please update your API key.");
     }
     
-    throw new Error("Falha ao analisar a imagem da prescrição. Por favor, tente novamente.");
+    throw new Error("Failed to analyze the prescription image. Please try again.");
   }
 }
 
@@ -93,19 +93,19 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
   } catch (error: any) {
     console.error("Error extracting medication info:", error);
     
-    // Verificar se é um erro de cota excedida
+    // Check if error is related to quota exceeded
     if (error?.error?.type === 'insufficient_quota' || 
         (error?.message && error.message.includes('quota'))) {
-      throw new Error("OpenAI API quota excedida. Por favor, entre em contato com o suporte.");
+      throw new Error("OpenAI API quota exceeded. Please contact support for assistance.");
     }
     
-    // Verificar se é um erro de chave API
+    // Check if error is related to API key
     if (error?.error?.type === 'invalid_api_key' || 
         (error?.message && error.message.includes('api key'))) {
-      throw new Error("Chave API do OpenAI inválida. Por favor, atualize sua chave API.");
+      throw new Error("Invalid OpenAI API key. Please update your API key.");
     }
     
-    // Caso seja outro erro, retornar estrutura vazia
+    // If it's another type of error, return empty structure
     return { medications: [] };
   }
 }
@@ -134,18 +134,18 @@ export async function getAIResponse(userMessage: string): Promise<string> {
   } catch (error: any) {
     console.error("OpenAI Chat API error:", error);
     
-    // Verificar se é um erro de cota excedida
+    // Check if error is related to quota exceeded
     if (error?.error?.type === 'insufficient_quota' || 
         (error?.message && error.message.includes('quota'))) {
-      throw new Error("OpenAI API quota excedida. Por favor, entre em contato com o suporte.");
+      throw new Error("OpenAI API quota exceeded. Please contact support for assistance.");
     }
     
-    // Verificar se é um erro de chave API
+    // Check if error is related to API key
     if (error?.error?.type === 'invalid_api_key' || 
         (error?.message && error.message.includes('api key'))) {
-      throw new Error("Chave API do OpenAI inválida. Por favor, atualize sua chave API.");
+      throw new Error("Invalid OpenAI API key. Please update your API key.");
     }
     
-    throw new Error("Falha ao obter uma resposta. Por favor, tente novamente.");
+    throw new Error("Failed to get a response. Please try again.");
   }
 }
