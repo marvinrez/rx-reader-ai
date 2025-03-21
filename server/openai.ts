@@ -37,9 +37,22 @@ export async function analyzeImage(base64Image: string): Promise<string> {
     });
 
     return visionResponse.choices[0].message.content || "Unable to analyze the prescription.";
-  } catch (error) {
+  } catch (error: any) {
     console.error("OpenAI Vision API error:", error);
-    throw new Error("Failed to analyze the prescription image. Please try again.");
+    
+    // Verificar se é um erro de cota excedida
+    if (error?.error?.type === 'insufficient_quota' || 
+        (error?.message && error.message.includes('quota'))) {
+      throw new Error("OpenAI API quota excedida. Por favor, entre em contato com o suporte.");
+    }
+    
+    // Verificar se é um erro de chave API
+    if (error?.error?.type === 'invalid_api_key' || 
+        (error?.message && error.message.includes('api key'))) {
+      throw new Error("Chave API do OpenAI inválida. Por favor, atualize sua chave API.");
+    }
+    
+    throw new Error("Falha ao analisar a imagem da prescrição. Por favor, tente novamente.");
   }
 }
 
@@ -105,8 +118,21 @@ export async function getAIResponse(userMessage: string): Promise<string> {
     });
 
     return response.choices[0].message.content || "I'm sorry, I couldn't generate a response. Please try again.";
-  } catch (error) {
+  } catch (error: any) {
     console.error("OpenAI Chat API error:", error);
-    throw new Error("Failed to get a response. Please try again.");
+    
+    // Verificar se é um erro de cota excedida
+    if (error?.error?.type === 'insufficient_quota' || 
+        (error?.message && error.message.includes('quota'))) {
+      throw new Error("OpenAI API quota excedida. Por favor, entre em contato com o suporte.");
+    }
+    
+    // Verificar se é um erro de chave API
+    if (error?.error?.type === 'invalid_api_key' || 
+        (error?.message && error.message.includes('api key'))) {
+      throw new Error("Chave API do OpenAI inválida. Por favor, atualize sua chave API.");
+    }
+    
+    throw new Error("Falha ao obter uma resposta. Por favor, tente novamente.");
   }
 }
