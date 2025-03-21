@@ -50,7 +50,9 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
           )}
           disabled={!message.trim()}
         >
-          <CustomSendIcon />
+          <span className="flex items-center justify-center text-white">
+            <CustomSendIcon />
+          </span>
         </Button>
       </form>
     </div>
