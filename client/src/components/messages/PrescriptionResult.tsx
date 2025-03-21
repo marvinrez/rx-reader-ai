@@ -33,7 +33,7 @@ export default function PrescriptionResult({ medications }: PrescriptionResultPr
   if (!medications || medications.length === 0) {
     return (
       <div className="flex mb-2">
-        <div className="bg-primary text-white rounded-lg py-3 px-4 max-w-xs">
+        <div className="bg-[#1F9881] text-white rounded-lg py-3 px-4 max-w-xs">
           <p className="text-sm">No medications were detected in this prescription. Please try with a clearer image.</p>
         </div>
       </div>
@@ -42,7 +42,7 @@ export default function PrescriptionResult({ medications }: PrescriptionResultPr
 
   return (
     <div className="flex mb-2">
-      <div className="bg-primary text-white rounded-lg py-3 px-4 max-w-xs">
+      <div className="bg-[#1F9881] text-white rounded-lg py-3 px-4 max-w-xs">
         <div className="space-y-2">
           {medications.map((medication, index) => (
             <div key={index}>

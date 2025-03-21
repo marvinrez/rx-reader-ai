@@ -80,7 +80,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
             }
           }}
         >
-          <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+          <div className="w-12 h-12 bg-[#1F9881] rounded-full flex items-center justify-center flex-shrink-0">
             <Camera className="h-6 w-6 text-white" />
           </div>
           <div className="text-left">

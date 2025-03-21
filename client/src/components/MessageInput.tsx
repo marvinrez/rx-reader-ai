@@ -45,7 +45,7 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
           size="icon" 
           className={cn(
             "rounded-full h-9 w-9 ml-1 flex items-center justify-center", 
-            message.trim() ? "bg-primary hover:bg-primary-dark" : "bg-primary/70"
+            message.trim() ? "bg-[#1F9881] hover:bg-[#188371]" : "bg-[#1F9881]/70"
           )}
           disabled={!message.trim()}
         >

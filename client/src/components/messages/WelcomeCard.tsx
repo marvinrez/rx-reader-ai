@@ -1,6 +1,6 @@
 export default function WelcomeCard() {
   return (
-    <div className="bg-[#28C3A6] text-white p-4 rounded-lg shadow-sm max-w-sm">
+    <div className="bg-[#1F9881] text-white p-4 rounded-lg shadow-sm max-w-sm">
       <h2 className="font-semibold text-lg mb-2">
         Welcome to RX Reader – Your Personal Prescription Decoder by AI!
       </h2>
