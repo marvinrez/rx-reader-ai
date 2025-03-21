@@ -8,13 +8,15 @@ export async function analyzePrescriptionImage(imageBase64: string): Promise<Pre
   } catch (error) {
     console.error('Error analyzing prescription:', error);
     
-    // Verificar se é um erro relacionado à API do OpenAI
+    // Verificar se é um erro relacionado à API do OpenAI ou tamanho do arquivo
     let message = error instanceof Error ? error.message : 'Falha ao analisar a prescrição';
     
     if (message.includes('quota') || message.includes('exceeded')) {
       message = 'A cota da API OpenAI foi excedida. Entre em contato com o suporte para assistência.';
     } else if (message.includes('api key') || message.includes('apiKey')) {
       message = 'Chave API inválida. Entre em contato com o suporte para atualizar a chave API.';
+    } else if (message.includes('413') || message.includes('too large') || message.includes('payload')) {
+      message = 'A imagem é muito grande. Por favor, tente com uma imagem menor ou reduzida.';
     }
     
     throw new Error(message);

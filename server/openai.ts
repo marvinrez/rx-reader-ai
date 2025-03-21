@@ -90,9 +90,22 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
       medications: Array.isArray(result.medications) ? result.medications : [],
       additionalInfo: result.additionalInfo || undefined
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error extracting medication info:", error);
-    // Return an empty structure in case of error
+    
+    // Verificar se é um erro de cota excedida
+    if (error?.error?.type === 'insufficient_quota' || 
+        (error?.message && error.message.includes('quota'))) {
+      throw new Error("OpenAI API quota excedida. Por favor, entre em contato com o suporte.");
+    }
+    
+    // Verificar se é um erro de chave API
+    if (error?.error?.type === 'invalid_api_key' || 
+        (error?.message && error.message.includes('api key'))) {
+      throw new Error("Chave API do OpenAI inválida. Por favor, atualize sua chave API.");
+    }
+    
+    // Caso seja outro erro, retornar estrutura vazia
     return { medications: [] };
   }
 }
