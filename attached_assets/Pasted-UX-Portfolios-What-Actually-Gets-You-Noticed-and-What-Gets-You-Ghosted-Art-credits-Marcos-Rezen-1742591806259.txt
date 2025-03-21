@@ -1,0 +1,133 @@
+UX Portfolios: What Actually Gets You Noticed (and What Gets You Ghosted)
+
+Art credits: Marcos Rezende + Midjourney, but the takeaways are 100% lived experience.
+
+I’ve coached designers from Rio to Tokyo—some with pixel-perfect work, others rough around the edges. And here's the harsh truth: the portfolio that gets the callback? It’s not always the flashiest one. It’s the one that tells a story like it actually happened. No smoke. No mirrors.
+
+I’ve flipped through hundreds of these things. Some grab you from the jump. Others? Dead weight. The difference? It's never just the visuals. It’s how you connect the dots—how you show that you didn’t just slap UI on a problem and hope for the best.
+
+1. Show how you think. Not just what you made.
+Forget the glossy mockups. Recruiters want brains, not just buttons. A solid case study should hit these notes:
+
+What problem were you solving? (And why did it even matter?)
+How’d you land on your approach? Got data? Show it.
+What actually changed for users—or the business?
+Did you tweak or toss anything once it hit the real world?
+Keep the numbers real and readable:
+
+Clear: “Signups up 25%” hits harder than paragraphs of fluff.
+Behavioral: “Users finished tasks 15% faster” > “Users liked it.”
+User-driven: Were your decisions built on real input?
+Consistent: Flash-in-the-pan metrics don’t cut it.
+Simple test: If someone asks, “Why’d you do that?”—your write-up should already answer it.
+
+2. Ditch the UX theater. Tell the messy version.
+No one’s looking for a checklist of UX steps. “I did research, then wireframes, then prototypes...” Cool. So did everyone.
+
+What’s more interesting?
+
+What went sideways and forced a pivot?
+What did you cut or compromise to ship?
+Why this version, not the other one?
+Instead of “We simplified checkout,” say:
+
+“We killed a form field. Lost some data, yeah—but conversions jumped 12%.”
+
+That’s the kind of thinking that gets interviews.
+
+3. Embrace the gray areas
+Design’s rarely black and white—it’s usually “uhh… it depends.” If your portfolio only shows clean paths and tidy outcomes, you’re leaving out the good stuff.
+
+Talk about:
+
+Prioritizing when everything felt on fire.
+Dealing with “strongly held” opinions from higher up.
+Making judgment calls when no option felt perfect.
+Mention the frameworks that helped. Maybe you used the Eisenhower Matrix? Cool. Say so. Just don’t pretend everything was clean and easy.
+
+Also, this matters:
+
+Strategic UX = long-term plays (like setting up for scale).
+Tactical UX = quick wins (like making checkout suck less).
+You should show you can think in both lanes.
+
+4. Cut the clutter
+One killer project > five half-baked ones. Always.
+
+Ask yourself:
+
+Can I defend every decision in this case study?
+Is this me at my best, or just me shipping something?
+And if you're new to the game? Fake a real project. Solve a real problem. Go deep. That's what matters.
+
+5. Show how you actually work with people
+Design doesn’t happen in a vacuum. You work with PMs, devs, maybe even lawyers. Don’t just say “I collaborated.” Show what that looked like.
+
+Examples:
+
+You worked out a phased launch that cut dev time in half?
+You changed a PM’s mind using user data?
+You found middle ground when a stakeholder wanted 12 features and you had budget for 5?
+Draw it. Map it. Anything. Just show you’re not soloing this stuff.
+
+6. Numbers pull people in—but stories make them stay
+Metrics are great. But without context, they’re just... numbers.
+
+Instead of:
+
+“Retention increased by 18%.”
+
+Try:
+
+“After redesigning onboarding, users stuck around 18% longer. One user said, ‘I finally don’t feel lost after signing up.’”
+
+Now it feels real.
+
+7. Be unforgettable
+You’re not writing a spec doc. You’re telling your origin story.
+
+Use the RISE format:
+
+Relevance: Why this project mattered.
+Impact: What changed.
+Struggles: What sucked along the way.
+Evolution: What you learned, and how you’d do it better now.
+Metaphors help. Instead of:
+
+“We improved navigation.”
+
+Try:
+
+“Before, the app felt like driving in a city with no street signs. Now, it’s like using GPS.”
+
+That’s what sticks.
+
+8. Treat your portfolio like a product
+It’s never “done.” It’s in beta. Always.
+
+Ship the rough version. Test it. Fix what’s broken. Repeat.
+
+Waiting until it’s perfect? That’s how you never launch.
+
+9. Make it stupidly easy to skim
+First 10 seconds = everything.
+
+Layout should guide the eye.
+Headlines should tell the story.
+Kill the fluff. Keep what matters.
+If they’re squinting, you’ve already lost.
+
+10. Write like a person. Not a robot.
+Talk how you talk. Not like you’re pitching to the Queen.
+
+No buzzwords.
+No run-on lectures.
+If you wouldn’t say it out loud, don’t write it.
+And if someone has to re-read a sentence to get it? You’ve already made them bounce.
+
+Final word
+
+UX isn’t a trophy hunt. It’s a slog. The ones who grow? They show up, mess up, clean up—and tell the story like it actually happened. Not the story they think recruiters want to hear.
+
+So yeah—build stuff. But more importantly, show how you think. That’s what makes a portfolio hit.
+
