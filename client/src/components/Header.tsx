@@ -6,7 +6,7 @@ export default function Header() {
     <header className="flex items-center justify-between px-4 py-3 bg-white border-b border-gray-200">
       <div className="flex items-center">
         <div className="w-10 h-10 flex items-center justify-center">
-          <img src="/images/app-logo.png" alt="RX Reader logo" className="w-10 h-10" />
+          <img src="/images/app-logo.png" alt="RX Reader logo" className="h-10 w-auto object-contain" />
         </div>
         <div className="ml-3">
           <h1 className="text-lg font-semibold">RX Reader</h1>

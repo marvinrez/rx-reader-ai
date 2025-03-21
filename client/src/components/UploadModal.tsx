@@ -31,6 +31,8 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
 
   const openFilePicker = () => {
     if (fileInputRef.current) {
+      // Remove the capture attribute to allow selecting from gallery
+      fileInputRef.current.removeAttribute('capture');
       fileInputRef.current.click();
     }
   };
@@ -63,6 +65,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
           ref={fileInputRef} 
           className="hidden" 
           accept="image/*" 
+          capture="environment"
           onChange={handleFileChange}
         />
 
@@ -70,15 +73,10 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
         <button 
           className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors"
           onClick={() => {
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-              // On mobile devices, this will open the camera
-              if (fileInputRef.current) {
-                fileInputRef.current.capture = "environment";
-                fileInputRef.current.click();
-              }
-            } else {
-              // Fallback to file picker
-              openFilePicker();
+            // Make sure the capture attribute is set for camera
+            if (fileInputRef.current) {
+              fileInputRef.current.setAttribute('capture', 'environment');
+              fileInputRef.current.click();
             }
           }}
         >
