@@ -9,6 +9,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -39,22 +45,35 @@ export default function Header() {
       </div>
       <div className="flex items-center">
         <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="ghost" size="icon" className="rounded-full h-9 w-9">
-              <MoreVertical className="h-5 w-5" />
-            </Button>
-          </DialogTrigger>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="rounded-full h-9 w-9 hover:bg-gray-100"
+                  >
+                    <MoreVertical className="h-5 w-5" />
+                  </Button>
+                </DialogTrigger>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>About this project</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>Sobre o RX Reader</DialogTitle>
+              <DialogTitle>About RX Reader</DialogTitle>
               <DialogDescription>
-                RX Reader é uma aplicação que utiliza inteligência artificial para interpretar receitas médicas manuscritas. 
-                Simplesmente envie uma foto da sua receita médica e deixe que o RX Reader decodifique os nomes dos medicamentos e instruções para você.
+                RX Reader is an application that uses artificial intelligence to interpret handwritten medical prescriptions.
+                Simply upload a photo of your prescription and let RX Reader decode the medication names and instructions for you.
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col space-y-3 mt-4">
               <p className="text-sm">
-                Este é um projeto de experimentação criado por{" "}
+                This is an experimental project created by{" "}
                 <a 
                   href="https://www.marcosrezende.com" 
                   target="_blank" 
@@ -65,7 +84,7 @@ export default function Header() {
                 </a>.
               </p>
               <p className="text-sm text-gray-500">
-                Desenvolvido como uma demonstração de tecnologia e não deve ser utilizado como substituto para orientação médica profissional.
+                Developed as a technology demonstration and should not be used as a substitute for professional medical guidance.
               </p>
             </div>
           </DialogContent>

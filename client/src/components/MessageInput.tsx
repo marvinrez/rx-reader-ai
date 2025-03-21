@@ -1,7 +1,8 @@
 import { useState, FormEvent } from "react";
-import { PaperclipIcon, SendIcon } from "lucide-react";
+import { PaperclipIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { CustomSendIcon } from "./icons/SendIcon";
 
 interface MessageInputProps {
   onSendMessage: (message: string) => void;
@@ -49,7 +50,7 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
           )}
           disabled={!message.trim()}
         >
-          <SendIcon className="h-4 w-4 text-white -mr-0.5 -mt-0.5" />
+          <CustomSendIcon />
         </Button>
       </form>
     </div>
