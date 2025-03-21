@@ -71,7 +71,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
 
         {/* Camera option */}
         <button 
-          className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors"
+          className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors group"
           onClick={() => {
             // Make sure the capture attribute is set for camera
             if (fileInputRef.current) {
@@ -80,8 +80,8 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
             }
           }}
         >
-          <div className="w-12 h-12 bg-[#017171] rounded-full flex items-center justify-center flex-shrink-0">
-            <Camera className="h-6 w-6 text-white" />
+          <div className="w-12 h-12 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#1A7F77] group-hover:border-[#1A7F77] transition-colors">
+            <Camera className="h-6 w-6 text-gray-600 group-hover:text-white transition-colors" />
           </div>
           <div className="text-left">
             <p className="font-medium text-lg">Camera</p>
@@ -91,11 +91,11 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
 
         {/* Gallery option */}
         <button 
-          className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors"
+          className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors group"
           onClick={openFilePicker}
         >
-          <div className="w-12 h-12 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
-            <Image className="h-6 w-6 text-gray-600" />
+          <div className="w-12 h-12 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#1A7F77] group-hover:border-[#1A7F77] transition-colors">
+            <Image className="h-6 w-6 text-gray-600 group-hover:text-white transition-colors" />
           </div>
           <div className="text-left">
             <p className="font-medium text-lg">Photos</p>
