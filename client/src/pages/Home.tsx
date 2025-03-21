@@ -118,9 +118,46 @@ export default function Home() {
     setIsModalOpen(true);
   };
 
+  // Função para comprimir imagem antes do envio
+  const compressImage = async (base64Image: string): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = base64Image;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        
+        // Calcular dimensões máximas de 1200px mantendo proporção
+        let width = img.width;
+        let height = img.height;
+        const MAX_SIZE = 1200;
+        
+        if (width > height && width > MAX_SIZE) {
+          height = Math.round((height * MAX_SIZE) / width);
+          width = MAX_SIZE;
+        } else if (height > MAX_SIZE) {
+          width = Math.round((width * MAX_SIZE) / height);
+          height = MAX_SIZE;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+        
+        // Qualidade 0.7 para JPEG
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+        resolve(compressedDataUrl);
+      };
+    });
+  };
+
   const handleUploadImage = async (base64Image: string) => {
     // Close modal
     setIsModalOpen(false);
+
+    // Comprimir imagem antes de exibir e enviar
+    const compressedImage = await compressImage(base64Image);
 
     // Add image message
     setMessages(prev => [
@@ -129,7 +166,7 @@ export default function Home() {
         id: Date.now(),
         prescriptionId: null,
         type: 'image',
-        content: base64Image,
+        content: compressedImage,
         metadata: null,
         createdAt: new Date()
       }
@@ -149,8 +186,8 @@ export default function Home() {
       }
     ]);
 
-    // Send to backend for analysis
-    analyzeImageMutation.mutate(base64Image.split(',')[1]);
+    // Send compressed image to backend for analysis
+    analyzeImageMutation.mutate(compressedImage.split(',')[1]);
   };
 
   const handleFeedback = (messageId: number, isAccurate: boolean) => {
