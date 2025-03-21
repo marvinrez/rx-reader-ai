@@ -1,6 +1,6 @@
 export default function WelcomeCard() {
   return (
-    <div className="bg-[#017171] text-white p-4 rounded-lg shadow-sm max-w-sm">
+    <div className="bg-[#1A7F77] text-white p-4 rounded-lg shadow-sm max-w-sm">
       <h2 className="font-semibold text-lg mb-2">
         Welcome to RX Reader – Your Personal Prescription Decoder by AI!
       </h2>
@@ -10,7 +10,7 @@ export default function WelcomeCard() {
       <p className="text-sm mb-3">
         Simply upload an image of the medical prescription, and let RX Reader AI decode the medication names and instructions for you.
       </p>
-      <p className="text-sm font-medium">Upload your prescription</p>
+      <p className="text-sm font-bold">Upload your prescription</p>
       <p className="text-sm">
         Share your requirements and 'Upload an image' by tapping on
         <span className="inline-flex items-center justify-center w-5 h-5 bg-white bg-opacity-20 rounded-full ml-1">
