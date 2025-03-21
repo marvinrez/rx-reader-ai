@@ -32,15 +32,15 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
     }
   };
 
-  // Função que FORÇADAMENTE abre a câmera
+  // Function that FORCIBLY opens the camera
   const openCamera = () => {
-    // Criamos um elemento temporário para garantir que seja sempre uma nova instância
+    // Create a temporary element to ensure it's always a new instance
     const tempInput = document.createElement('input');
     tempInput.type = 'file';
     tempInput.accept = 'image/*';
-    tempInput.capture = 'environment'; // Força abrir a câmera
+    tempInput.capture = 'environment'; // Forces camera to open
     
-    // Quando o arquivo for selecionado
+    // When the file is selected
     tempInput.onchange = async (e) => {
       const target = e.target as HTMLInputElement;
       const file = target.files?.[0];
@@ -48,26 +48,26 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
         try {
           const dataUrl = await fileToDataURL(file);
           onUpload(dataUrl);
-          onClose(); // Fechar após upload
+          onClose(); // Close after upload
         } catch (error) {
           console.error("Error processing camera image:", error);
         }
       }
     };
     
-    // Abrir a câmera clicando programaticamente
+    // Open the camera programmatically
     tempInput.click();
   };
 
-  // Função para abrir a galeria 
+  // Function to open the gallery 
   const openGallery = () => {
-    // Mesmo padrão: criamos elemento temporário
+    // Same pattern: create a temporary element
     const tempInput = document.createElement('input');
     tempInput.type = 'file';
     tempInput.accept = 'image/*';
-    // Não definimos capture para abrir a galeria
+    // We don't define capture to open the gallery
     
-    // Quando o arquivo for selecionado
+    // When the file is selected
     tempInput.onchange = async (e) => {
       const target = e.target as HTMLInputElement;
       const file = target.files?.[0];
@@ -75,14 +75,14 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
         try {
           const dataUrl = await fileToDataURL(file);
           onUpload(dataUrl);
-          onClose(); // Fechar após upload
+          onClose(); // Close after upload
         } catch (error) {
           console.error("Error processing gallery image:", error);
         }
       }
     };
     
-    // Abrir a galeria clicando programaticamente
+    // Open the gallery programmatically
     tempInput.click();
   };
 
