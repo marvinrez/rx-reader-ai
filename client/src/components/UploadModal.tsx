@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Camera, Image, X } from "lucide-react";
 import { fileToDataURL } from "@/lib/utils";
 
@@ -9,35 +9,81 @@ interface UploadModalProps {
 }
 
 export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalProps) {
+  // Referências separadas para cada input
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
   
   if (!isOpen) return null;
 
+  // Função para processar arquivos
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       try {
         const dataUrl = await fileToDataURL(file);
         onUpload(dataUrl);
-        // Reset the file input
-        e.target.value = '';
+        // Fechar o modal após upload
+        onClose();
       } catch (error) {
         console.error("Error converting file to data URL:", error);
       }
+      // Reset do input
+      e.target.value = '';
     }
   };
 
+  // Função que FORÇADAMENTE abre a câmera
   const openCamera = () => {
-    if (cameraInputRef.current) {
-      cameraInputRef.current.click();
-    }
+    // Criamos um elemento temporário para garantir que seja sempre uma nova instância
+    const tempInput = document.createElement('input');
+    tempInput.type = 'file';
+    tempInput.accept = 'image/*';
+    tempInput.capture = 'environment'; // Força abrir a câmera
+    
+    // Quando o arquivo for selecionado
+    tempInput.onchange = async (e) => {
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
+      if (file) {
+        try {
+          const dataUrl = await fileToDataURL(file);
+          onUpload(dataUrl);
+          onClose(); // Fechar após upload
+        } catch (error) {
+          console.error("Error processing camera image:", error);
+        }
+      }
+    };
+    
+    // Abrir a câmera clicando programaticamente
+    tempInput.click();
   };
 
+  // Função para abrir a galeria 
   const openGallery = () => {
-    if (galleryInputRef.current) {
-      galleryInputRef.current.click();
-    }
+    // Mesmo padrão: criamos elemento temporário
+    const tempInput = document.createElement('input');
+    tempInput.type = 'file';
+    tempInput.accept = 'image/*';
+    // Não definimos capture para abrir a galeria
+    
+    // Quando o arquivo for selecionado
+    tempInput.onchange = async (e) => {
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
+      if (file) {
+        try {
+          const dataUrl = await fileToDataURL(file);
+          onUpload(dataUrl);
+          onClose(); // Fechar após upload
+        } catch (error) {
+          console.error("Error processing gallery image:", error);
+        }
+      }
+    };
+    
+    // Abrir a galeria clicando programaticamente
+    tempInput.click();
   };
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -61,28 +107,6 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
             <X className="h-6 w-6" />
           </button>
         </div>
-
-        {/* Hidden file input */}
-        {/* Input para a câmera */}
-        <input 
-          type="file" 
-          id="camera-input"
-          ref={cameraInputRef} 
-          className="hidden" 
-          accept="image/*" 
-          capture="environment"
-          onChange={handleFileChange}
-        />
-        
-        {/* Input separado para a galeria (sem atributo capture) */}
-        <input 
-          type="file" 
-          id="gallery-input"
-          ref={galleryInputRef}
-          className="hidden" 
-          accept="image/*" 
-          onChange={handleFileChange}
-        />
 
         {/* Camera option */}
         <button 
