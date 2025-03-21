@@ -7,6 +7,11 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 
+// Add health check endpoint
+app.get("/", (_req, res) => {
+  res.status(200).send("OK");
+});
+
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -54,7 +59,14 @@ app.use((req, res, next) => {
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
+    // In production, serve static files and handle SPA routing
     serveStatic(app);
+    app.get("*", (req, res, next) => {
+      if (req.path.startsWith("/api")) {
+        return next();
+      }
+      res.sendFile("index.html", { root: "./dist/public" });
+    });
   }
 
   // ALWAYS serve the app on port 5000
