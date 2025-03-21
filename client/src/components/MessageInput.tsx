@@ -44,12 +44,12 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
           type="submit" 
           size="icon" 
           className={cn(
-            "rounded-full h-9 w-9 ml-1", 
+            "rounded-full h-9 w-9 ml-1 flex items-center justify-center", 
             message.trim() ? "bg-primary hover:bg-primary-dark" : "bg-primary/70"
           )}
           disabled={!message.trim()}
         >
-          <SendIcon className="h-5 w-5 text-white" />
+          <SendIcon className="h-4 w-4 text-white" />
         </Button>
       </form>
     </div>
