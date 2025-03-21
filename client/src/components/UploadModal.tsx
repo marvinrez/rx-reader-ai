@@ -9,8 +9,9 @@ interface UploadModalProps {
 }
 
 export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
+  
   if (!isOpen) return null;
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,20 +21,22 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
         const dataUrl = await fileToDataURL(file);
         onUpload(dataUrl);
         // Reset the file input
-        if (fileInputRef.current) {
-          fileInputRef.current.value = '';
-        }
+        e.target.value = '';
       } catch (error) {
         console.error("Error converting file to data URL:", error);
       }
     }
   };
 
-  const openFilePicker = () => {
-    if (fileInputRef.current) {
-      // Remove the capture attribute to allow selecting from gallery
-      fileInputRef.current.removeAttribute('capture');
-      fileInputRef.current.click();
+  const openCamera = () => {
+    if (cameraInputRef.current) {
+      cameraInputRef.current.click();
+    }
+  };
+
+  const openGallery = () => {
+    if (galleryInputRef.current) {
+      galleryInputRef.current.click();
     }
   };
 
@@ -60,25 +63,31 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
         </div>
 
         {/* Hidden file input */}
+        {/* Input para a câmera */}
         <input 
           type="file" 
-          ref={fileInputRef} 
+          id="camera-input"
+          ref={cameraInputRef} 
           className="hidden" 
           accept="image/*" 
           capture="environment"
+          onChange={handleFileChange}
+        />
+        
+        {/* Input separado para a galeria (sem atributo capture) */}
+        <input 
+          type="file" 
+          id="gallery-input"
+          ref={galleryInputRef}
+          className="hidden" 
+          accept="image/*" 
           onChange={handleFileChange}
         />
 
         {/* Camera option */}
         <button 
           className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors group"
-          onClick={() => {
-            // Make sure the capture attribute is set for camera
-            if (fileInputRef.current) {
-              fileInputRef.current.setAttribute('capture', 'environment');
-              fileInputRef.current.click();
-            }
-          }}
+          onClick={openCamera}
         >
           <div className="w-12 h-12 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#1A7F77] group-hover:border-[#1A7F77] transition-colors">
             <Camera className="h-6 w-6 text-gray-600 group-hover:text-white transition-colors" />
@@ -92,7 +101,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
         {/* Gallery option */}
         <button 
           className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors group"
-          onClick={openFilePicker}
+          onClick={openGallery}
         >
           <div className="w-12 h-12 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#1A7F77] group-hover:border-[#1A7F77] transition-colors">
             <Image className="h-6 w-6 text-gray-600 group-hover:text-white transition-colors" />
