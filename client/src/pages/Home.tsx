@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import ChatContainer from "@/components/ChatContainer";
 import MessageInput from "@/components/MessageInput";
@@ -156,6 +156,57 @@ export default function Home() {
   const handleFeedback = (messageId: number, isAccurate: boolean) => {
     submitFeedbackMutation.mutate({ messageId, isAccurate });
   };
+
+  // Handle Help & FAQ button click from header
+  useEffect(() => {
+    const handleHelpFaq = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      if (customEvent.detail?.showHelp) {
+        // Add AI message with FAQ content
+        setMessages(prev => [
+          ...prev,
+          {
+            id: Date.now(),
+            prescriptionId: null,
+            type: 'ai',
+            content: `# RX Reader Help & FAQs
+
+### How to use RX Reader:
+1. Upload a clear image of your prescription using the paperclip icon
+2. Wait for the AI to analyze the handwriting
+3. Review the decoded medication information
+4. Ask any follow-up questions about your medications
+
+### Frequently Asked Questions:
+
+**Q: How accurate is the prescription reading?**
+A: RX Reader uses advanced AI to interpret prescriptions, but accuracy may vary depending on image quality. Always verify with your healthcare provider.
+
+**Q: Is my prescription data private?**
+A: Yes, your prescription data is processed securely and not stored permanently.
+
+**Q: What if the app can't read my prescription?**
+A: Try taking a clearer photo with good lighting, or ask the AI for guidance directly.
+
+**Q: Can the app provide medical advice?**
+A: No, RX Reader only helps decode prescriptions. Always consult with a healthcare professional for medical advice.
+
+**How else can I help you today?**`,
+            metadata: null,
+            createdAt: new Date()
+          }
+        ]);
+      }
+    };
+
+    // Add event listener for the Help & FAQ button
+    window.addEventListener('showHelpFaq', handleHelpFaq);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener('showHelpFaq', handleHelpFaq);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-neutral-background to-white">
