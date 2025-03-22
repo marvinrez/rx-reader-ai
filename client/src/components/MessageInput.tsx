@@ -32,7 +32,7 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
         >
           <PaperclipIcon className="h-5 w-5 text-gray-500" />
         </Button>
-        
+
         <input
           type="text"
           value={message}
@@ -40,7 +40,7 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
           placeholder="Type your message"
           className="flex-1 bg-transparent p-2 focus:outline-none text-sm"
         />
-        
+
         <Button 
           type="submit" 
           size="icon" 
