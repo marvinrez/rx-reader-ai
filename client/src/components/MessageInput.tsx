@@ -21,7 +21,7 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
   };
 
   return (
-    <div className="border-t border-gray-200 bg-white p-[15px]">
+    <div className="border-t border-gray-200 bg-white p-[30px]">
       <form onSubmit={handleSubmit} className="flex items-center rounded-full bg-gray-100 px-[15px] py-[15px]">
         <Button 
           type="button"
