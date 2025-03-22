@@ -67,12 +67,17 @@ export default function Header() {
             <DialogHeader>
               <DialogTitle>About RX Reader</DialogTitle>
               <DialogDescription>
-                RX Reader is an application that uses artificial intelligence to interpret handwritten medical prescriptions.
-                Simply upload a photo of your prescription and let RX Reader decode the medication names and instructions for you.
+                RX Reader is an experimental application that uses artificial intelligence to assist in interpreting handwritten medical prescriptions. While it aims to help decode prescriptions, it's important to understand its limitations.
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col space-y-3 mt-4">
-              <p className="text-sm">
+              <p className="text-sm font-medium text-red-600">
+                ⚠️ Important Disclaimer
+              </p>
+              <p className="text-sm text-gray-700">
+                This AI system may make mistakes in interpretation and should never be used as the sole source for medical decisions. Always verify all information with your healthcare provider and pharmacist.
+              </p>
+              <p className="text-sm text-gray-700">
                 This is an experimental project created by{" "}
                 <a 
                   href="https://www.marcosrezende.com" 
@@ -83,8 +88,11 @@ export default function Header() {
                   Marcos Rezende
                 </a>.
               </p>
-              <p className="text-sm text-gray-500">
-                Developed as a technology demonstration and should not be used as a substitute for professional medical guidance.
+              <p className="text-sm text-gray-600">
+                • Not a substitute for professional medical guidance<br/>
+                • May contain errors or misinterpretations<br/>
+                • Always consult healthcare professionals<br/>
+                • For reference purposes only
               </p>
             </div>
           </DialogContent>
