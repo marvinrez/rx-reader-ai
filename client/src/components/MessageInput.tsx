@@ -37,7 +37,7 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your message"
+          placeholder="Ask any questions about your prescription"
           className="flex-1 bg-transparent p-2 focus:outline-none text-sm"
         />
 
