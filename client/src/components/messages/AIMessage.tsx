@@ -12,7 +12,7 @@ export default function AIMessage({ content }: AIMessageProps) {
           <ReactMarkdown>
             {content}
           </ReactMarkdown>
-          {!content.includes("Unable to read prescription") && (
+          {content.includes("Unable to read prescription") || content.length === 0 ? null : (
             <div className="mt-2 text-xs border-t border-white/20 pt-2">
               Note: AI responses may not be 100% accurate. Always verify information with healthcare professionals.
             </div>

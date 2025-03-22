@@ -15,7 +15,7 @@ export default function PrescriptionResult({ medications, unreadableImage, addit
     const text = medications.map(med => 
       `${med.name}\n${med.dosage}${med.instructions ? `\n${med.instructions}` : ''}`
     ).join('\n\n');
-    
+
     navigator.clipboard.writeText(text)
       .then(() => {
         toast({
@@ -63,6 +63,7 @@ export default function PrescriptionResult({ medications, unreadableImage, addit
     <div className="flex mb-2">
       <div className="bg-[#017171] text-white rounded-lg py-3 px-4 max-w-xs">
         <div className="space-y-2">
+          <p className="text-sm text-gray-600 mb-2">Note: AI responses may not be 100% accurate. Always verify information with healthcare professionals.</p>
           {medications.map((medication, index) => (
             <div key={index}>
               <p className="font-medium">{medication.name}</p>
