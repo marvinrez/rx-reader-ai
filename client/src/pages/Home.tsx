@@ -224,15 +224,7 @@ export default function Home() {
             id: Date.now(),
             prescriptionId: null,
             type: 'ai',
-            content: `# RX Reader Help & FAQs
-
-### How to use RX Reader:
-1. Upload a clear image of your prescription using the paperclip icon
-2. Wait for the AI to analyze the handwriting
-3. Review the decoded medication information
-4. Ask any follow-up questions about your medications
-
-### Frequently Asked Questions:
+            content: `### Frequently Asked Questions:
 
 **Q: How accurate is the prescription reading?**
 A: RX Reader uses advanced AI to interpret prescriptions, but accuracy may vary depending on image quality. Always verify with your healthcare provider.

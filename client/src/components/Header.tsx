@@ -27,20 +27,36 @@ export default function Header() {
         </div>
         <div className="ml-2">
           <h1 className="text-lg font-semibold leading-none">RX Reader</h1>
-          <button 
-            onClick={() => {
-              // Dispatch a custom event that will be caught by the Home component
-              const helpEvent = new CustomEvent('showHelpFaq', { 
-                detail: { 
-                  showHelp: true 
-                }
-              });
-              window.dispatchEvent(helpEvent);
-            }}
-            className="text-xs text-gray-500 hover:text-primary cursor-pointer mt-0.5"
-          >
-            Help & FAQ
-          </button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button className="text-xs text-gray-500 hover:text-primary cursor-pointer mt-0.5">
+                FAQ
+              </button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Frequently Asked Questions</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <p className="font-medium">How accurate is the prescription reading?</p>
+                  <p className="text-sm text-gray-600">RX Reader uses advanced AI to interpret prescriptions, but accuracy may vary depending on image quality. Always verify with your healthcare provider.</p>
+                </div>
+                <div>
+                  <p className="font-medium">Is my prescription data private?</p>
+                  <p className="text-sm text-gray-600">Yes, your prescription data is processed securely and not stored permanently.</p>
+                </div>
+                <div>
+                  <p className="font-medium">What if the app can't read my prescription?</p>
+                  <p className="text-sm text-gray-600">Try taking a clearer photo with good lighting, or ask the AI for guidance directly.</p>
+                </div>
+                <div>
+                  <p className="font-medium">Can the app provide medical advice?</p>
+                  <p className="text-sm text-gray-600">No, RX Reader only helps decode prescriptions. Always consult with a healthcare professional for medical advice.</p>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       <div className="flex items-center">
