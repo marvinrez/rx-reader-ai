@@ -35,7 +35,7 @@ export default function PrescriptionResult({ medications, unreadableImage, addit
   if (unreadableImage || !medications || medications.length === 0) {
     return (
       <div className="flex mb-2">
-        <div className="bg-[#017171] text-white rounded-lg py-3 px-4 max-w-xs">
+        <div className="bg-[#017171] text-white rounded-lg py-3 px-2 max-w-xs"> {/* Changed px-4 to px-2 */}
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-5 w-5 text-white shrink-0 mt-0.5" />
             <div>
@@ -61,7 +61,7 @@ export default function PrescriptionResult({ medications, unreadableImage, addit
 
   return (
     <div className="flex mb-2">
-      <div className="bg-[#017171] text-white rounded-lg py-3 px-4 max-w-xs">
+      <div className="bg-[#017171] text-white rounded-lg py-3 px-2 max-w-xs"> {/* Changed px-4 to px-2 */}
         <div className="space-y-2">
           {medications.map((medication, index) => (
             <div key={index}>
