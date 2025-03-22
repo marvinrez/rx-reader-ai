@@ -200,17 +200,6 @@ export default function Home() {
 
     // Set loading state
     setIsLoading(true);
-    setMessages(prev => [
-      ...prev,
-      {
-        id: Date.now() + 1,
-        prescriptionId: null,
-        type: 'ai',
-        content: "I'll help you understand how to read this info—just a moment.",
-        metadata: null,
-        createdAt: new Date()
-      }
-    ]);
 
     // Send compressed image to backend for analysis
     analyzeImageMutation.mutate(compressedImage.split(',')[1]);

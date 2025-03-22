@@ -31,13 +31,13 @@ export default function ChatContainer({ messages, isLoading, onFeedback }: ChatC
           return <WelcomeCard key={`msg-${message.id}`} />;
         }
         return null;
-        
+
       case 'user':
         return <UserMessage key={`msg-${message.id}`} content={message.content} />;
-        
+
       case 'image':
         return <UploadedImage key={`msg-${message.id}`} image={message.content} />;
-        
+
       case 'ai':
         return (
           <div key={`msg-${message.id}`}>
@@ -51,7 +51,7 @@ export default function ChatContainer({ messages, isLoading, onFeedback }: ChatC
             }
           </div>
         );
-        
+
       case 'prescription':
         return (
           <div key={`msg-${message.id}`}>
@@ -63,7 +63,7 @@ export default function ChatContainer({ messages, isLoading, onFeedback }: ChatC
             <FeedbackOptions onFeedback={(isAccurate) => onFeedback(message.id, isAccurate)} />
           </div>
         );
-        
+
       default:
         return null;
     }
@@ -72,11 +72,11 @@ export default function ChatContainer({ messages, isLoading, onFeedback }: ChatC
   return (
     <div 
       ref={containerRef} 
-      className="flex-1 overflow-y-auto p-[15px] space-y-4"
+      className="flex-1 overflow-y-auto px-[15px] py-4"
       style={{ height: 'calc(100vh - 70px - 60px)' }}
     >
       {messages.map((message, index) => renderMessage(message, index))}
-      
+
       {isLoading && <AILoadingState />}
     </div>
   );
