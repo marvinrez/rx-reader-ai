@@ -63,7 +63,6 @@ export default function PrescriptionResult({ medications, unreadableImage, addit
     <div className="flex mb-2">
       <div className="bg-[#017171] text-white rounded-lg py-3 px-4 max-w-xs">
         <div className="space-y-2">
-          <div className="p-[15px] text-sm text-gray-600 border-t border-gray-200">Note: AI responses may not be 100% accurate. Always verify information with healthcare professionals.</div>
           {medications.map((medication, index) => (
             <div key={index}>
               <p className="font-medium">{medication.name}</p>
@@ -78,6 +77,9 @@ export default function PrescriptionResult({ medications, unreadableImage, addit
             <button onClick={handleCopy} className="focus:outline-none">
               <Copy className="h-5 w-5 text-white" />
             </button>
+          </div>
+          <div className="mt-4 pt-2 border-t border-white/20">
+            <p className="text-xs text-white">Note: AI responses may not be 100% accurate. Always verify information with healthcare professionals.</p>
           </div>
         </div>
       </div>
