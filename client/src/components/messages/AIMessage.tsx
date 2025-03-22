@@ -8,7 +8,7 @@ export default function AIMessage({ content }: AIMessageProps) {
   return (
     <div className="flex mb-2">
       <div className="bg-[#1A7F77] text-white rounded-lg py-2 px-4 max-w-[80%] shadow-sm">
-        <div className="text-sm prose prose-invert prose-sm max-w-none">
+        <div className="text-sm prose prose-invert prose-sm max-w-none text-white">
           <ReactMarkdown>
             {content}
           </ReactMarkdown>
