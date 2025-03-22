@@ -72,7 +72,7 @@ export default function ChatContainer({ messages, isLoading, onFeedback }: ChatC
   return (
     <div 
       ref={containerRef} 
-      className="flex-1 overflow-y-auto px-4 py-4 space-y-4"
+      className="flex-1 overflow-y-auto px-[15px] py-[15px] space-y-4"
       style={{ height: 'calc(100vh - 70px - 60px)' }}
     >
       {messages.map((message, index) => renderMessage(message, index))}
