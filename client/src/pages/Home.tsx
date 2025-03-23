@@ -51,21 +51,28 @@ export default function Home() {
     onError: (error: any) => {
       setIsLoading(false);
       
-      // Determine alert type based on error type
+      // Determine alert type and user-friendly message
       let variant: "default" | "destructive" | "warning" = "destructive";
-      let title = "Error analyzing prescription";
+      let title = "Unable to read image";
+      let description = "Try taking a new photo with good lighting or use a different image.";
       
       if (error.type === 'size') {
         variant = "warning";
         title = "Image too large";
+        description = "Please use a smaller image or reduce the photo size.";
       } else if (error.type === 'api') {
         variant = "destructive";
-        title = "OpenAI API Error";
+        title = "Service temporarily unavailable";
+        description = "Our reading service is busy. Please try again in a few minutes.";
+      } else if (error.message && error.message.includes('format')) {
+        variant = "warning";
+        title = "Unsupported image format";
+        description = "Please use a photo in JPG, PNG format or a PDF document.";
       }
       
       toast({
         title: title,
-        description: error.message || "Failed to analyze the image. Please try again.",
+        description: description,
         variant: variant
       });
     }

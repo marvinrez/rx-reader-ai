@@ -18,13 +18,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: 'No image provided' });
       }
 
-      // Validate file format
-      const isValidFile = imageBase64.match(/^data:(image\/(jpeg|jpg|png|webp|heic)|application\/pdf);base64,/);
-      if (!isValidFile) {
-        console.log("Invalid format detected:", imageBase64.substring(0, 50) + "...");
+      // Validate file format - using a more lenient check
+      // Just verify the string starts with data: and contains base64
+      const hasDataPrefix = imageBase64.startsWith('data:');
+      const containsBase64 = imageBase64.includes('base64,');
+      
+      if (!hasDataPrefix || !containsBase64) {
+        console.log("Possibly invalid format detected");
         return res.status(400).json({ 
-          message: 'Invalid format. Please use JPEG/JPG, PNG, WEBP, HEIC images or PDF files.',
-          detail: 'Make sure the image is properly encoded as base64 with the correct mime type.'
+          message: 'We couldn\'t read this image. Please try a different photo format or take a new picture.',
+          detail: 'Supported formats: JPG, PNG, or PDF'
         });
       }
 
