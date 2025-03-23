@@ -12,7 +12,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
   // Separate references for each input
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
-  
+
   if (!isOpen) return null;
 
   // Function to process files
@@ -37,9 +37,9 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
     // Create a temporary element to ensure it's always a new instance
     const tempInput = document.createElement('input');
     tempInput.type = 'file';
-    tempInput.accept = 'image/*';
+    tempInput.accept = 'image/*,.webp';
     tempInput.capture = 'environment'; // Forces camera to open
-    
+
     // When the file is selected
     tempInput.onchange = async (e) => {
       const target = e.target as HTMLInputElement;
@@ -54,7 +54,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
         }
       }
     };
-    
+
     // Open the camera programmatically
     tempInput.click();
   };
@@ -64,9 +64,9 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
     // Same pattern: create a temporary element
     const tempInput = document.createElement('input');
     tempInput.type = 'file';
-    tempInput.accept = 'image/*';
+    tempInput.accept = 'image/*,.webp';
     // We don't define capture to open the gallery
-    
+
     // When the file is selected
     tempInput.onchange = async (e) => {
       const target = e.target as HTMLInputElement;
@@ -81,7 +81,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
         }
       }
     };
-    
+
     // Open the gallery programmatically
     tempInput.click();
   };
