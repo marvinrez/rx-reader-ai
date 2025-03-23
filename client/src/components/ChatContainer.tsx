@@ -7,7 +7,18 @@ import AILoadingState from "./messages/AILoadingState";
 import PrescriptionResult from "./messages/PrescriptionResult";
 import FeedbackOptions from "./messages/FeedbackOptions";
 import ErrorMessage from "./messages/ErrorMessage";
-import { Message } from "@shared/schema";
+import { Message, Medication } from "@shared/schema";
+
+interface ErrorMetadata {
+  message: string;
+  errorType: string;
+}
+
+interface PrescriptionMetadata {
+  medications: Medication[];
+  unreadableImage?: boolean;
+  additionalInfo?: string;
+}
 
 interface ChatContainerProps {
   messages: Message[];
@@ -31,11 +42,12 @@ export default function ChatContainer({ messages, isLoading, onFeedback }: ChatC
         if (message.content === 'welcome') {
           return <WelcomeCard key={`msg-${message.id}`} />;
         } else if (message.content === 'error' && message.metadata) {
+          const errorMetadata = message.metadata as ErrorMetadata;
           return (
             <ErrorMessage 
               key={`msg-${message.id}`}
-              message={message.metadata.message as string}
-              errorType={message.metadata.errorType as string}
+              message={errorMetadata.message}
+              errorType={errorMetadata.errorType}
             />
           );
         }
@@ -62,12 +74,14 @@ export default function ChatContainer({ messages, isLoading, onFeedback }: ChatC
         );
 
       case 'prescription':
+        const metadata = message.metadata as PrescriptionMetadata | null;
+        
         return (
           <div key={`msg-${message.id}`}>
             <PrescriptionResult 
-              medications={message.metadata?.medications || []}
-              unreadableImage={message.metadata?.unreadableImage}
-              additionalInfo={message.metadata?.additionalInfo}
+              medications={metadata?.medications || []}
+              unreadableImage={metadata?.unreadableImage}
+              additionalInfo={metadata?.additionalInfo}
             />
             <FeedbackOptions onFeedback={(isAccurate) => onFeedback(message.id, isAccurate)} />
           </div>
