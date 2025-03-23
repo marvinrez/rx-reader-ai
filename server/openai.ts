@@ -13,7 +13,7 @@ export async function analyzeImage(base64Image: string): Promise<string> {
   try {
     console.log("Base64 image length:", base64Image.length);
     const visionResponse = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4-vision-preview",
       messages: [
         {
           role: "system",
@@ -41,19 +41,19 @@ export async function analyzeImage(base64Image: string): Promise<string> {
     return visionResponse.choices[0].message.content || "Unable to analyze the prescription.";
   } catch (error: any) {
     console.error("OpenAI Vision API error:", error);
-    
+
     // Check if error is related to quota exceeded
     if (error?.error?.type === 'insufficient_quota' || 
         (error?.message && error.message.includes('quota'))) {
       throw new Error("OpenAI API quota exceeded. Please contact support for assistance.");
     }
-    
+
     // Check if error is related to API key
     if (error?.error?.type === 'invalid_api_key' || 
         (error?.message && error.message.includes('api key'))) {
       throw new Error("Invalid OpenAI API key. Please update your API key.");
     }
-    
+
     throw new Error("Failed to analyze the prescription image. Please try again.");
   }
 }
@@ -80,11 +80,11 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
       "can't make out", "difficult to read", "unable to read", "not clear enough",
       "too blurry", "poor quality", "can't see"
     ];
-    
+
     const isUnreadable = unreadableIndicators.some(indicator => 
       analysisText.toLowerCase().includes(indicator)
     );
-    
+
     if (isUnreadable) {
       return {
         medications: [],
@@ -94,7 +94,7 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
     }
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4-vision-preview",
       messages: [
         {
           role: "system",
@@ -109,7 +109,7 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
     });
 
     const result = JSON.parse(response.choices[0].message.content || "{}");
-    
+
     // Check if the AI identified the image as unreadable
     if (result.unreadableImage) {
       return {
@@ -118,7 +118,7 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
         additionalInfo: result.additionalInfo || "The prescription image couldn't be properly analyzed. Please upload a clearer image."
       };
     }
-    
+
     // Check if we got a valid medication list
     if (!Array.isArray(result.medications) || result.medications.length === 0) {
       return {
@@ -127,13 +127,13 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
         additionalInfo: "No medications were detected in the image. Please upload a clearer image of a prescription."
       };
     }
-    
+
     // Add validation warnings to medications
     const medicationsWithWarnings = result.medications.map(med => {
       const warning = validateMedication(med.name, med.dosage);
       return warning ? { ...med, warning } : med;
     });
-    
+
     // Ensure the response has the expected structure
     return {
       medications: medicationsWithWarnings,
@@ -142,19 +142,19 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
     };
   } catch (error: any) {
     console.error("Error extracting medication info:", error);
-    
+
     // Check if error is related to quota exceeded
     if (error?.error?.type === 'insufficient_quota' || 
         (error?.message && error.message.includes('quota'))) {
       throw new Error("OpenAI API quota exceeded. Please contact support for assistance.");
     }
-    
+
     // Check if error is related to API key
     if (error?.error?.type === 'invalid_api_key' || 
         (error?.message && error.message.includes('api key'))) {
       throw new Error("Invalid OpenAI API key. Please update your API key.");
     }
-    
+
     // If it's another type of error, return empty structure with appropriate message
     return { 
       medications: [],
@@ -170,7 +170,7 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
 export async function getAIResponse(userMessage: string): Promise<string> {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4-vision-preview",
       messages: [
         {
           role: "system",
@@ -187,19 +187,19 @@ export async function getAIResponse(userMessage: string): Promise<string> {
     return response.choices[0].message.content || "I'm sorry, I couldn't generate a response. Please try again.";
   } catch (error: any) {
     console.error("OpenAI Chat API error:", error);
-    
+
     // Check if error is related to quota exceeded
     if (error?.error?.type === 'insufficient_quota' || 
         (error?.message && error.message.includes('quota'))) {
       throw new Error("OpenAI API quota exceeded. Please contact support for assistance.");
     }
-    
+
     // Check if error is related to API key
     if (error?.error?.type === 'invalid_api_key' || 
         (error?.message && error.message.includes('api key'))) {
       throw new Error("Invalid OpenAI API key. Please update your API key.");
     }
-    
+
     throw new Error("Failed to get a response. Please try again.");
   }
 }
