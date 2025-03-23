@@ -57,9 +57,9 @@ export default function Header() {
               variant="ghost" 
               size="icon"
               aria-label="Options menu"
-              className="focus:ring-2 focus:ring-primary/50 focus:outline-none hover:bg-gray-100 focus:bg-[#2A6F62] group data-[state=open]:bg-[#2A6F62]"
+              className="focus:ring-2 focus:ring-primary/50 focus:outline-none hover:bg-gray-100"
             >
-              <MoreVertical className="h-5 w-5 group-data-[state=open]:text-white focus:text-white group-focus:text-white" aria-hidden="true" />
+              <MoreVertical className="h-5 w-5  focus:text-white group-focus:text-white" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[200px] p-2">
