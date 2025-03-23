@@ -19,9 +19,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Validate file format
-      const isValidFile = imageBase64.match(/^data:(image\/(jpeg|png|webp|heic)|application\/pdf);base64,/);
+      const isValidFile = imageBase64.match(/^data:(image\/(jpeg|jpg|png|webp|heic)|application\/pdf);base64,/);
       if (!isValidFile) {
-        return res.status(400).json({ message: 'Invalid format. Please use JPEG, PNG, WEBP, HEIC images or PDF files.' });
+        console.log("Invalid format detected:", imageBase64.substring(0, 50) + "...");
+        return res.status(400).json({ 
+          message: 'Invalid format. Please use JPEG/JPG, PNG, WEBP, HEIC images or PDF files.',
+          detail: 'Make sure the image is properly encoded as base64 with the correct mime type.'
+        });
       }
 
       // Call OpenAI to analyze the image
