@@ -13,7 +13,7 @@ export default function PrescriptionResult({ medications, unreadableImage, addit
 
   const handleCopy = () => {
     const text = medications.map(med => 
-      `${med.name}\n${med.dosage}${med.instructions ? `\n${med.instructions}` : ''}`
+      `${med.name}\n${med.dosage}${med.instructions ? `\n${med.instructions}` : ''}${med.warning ? `\n⚠️ ${med.warning}` : ''}${med.interactions ? `\n⚠️ Interações: ${med.interactions.join(', ')}` : ''}${med.pregnancyRisk ? `\n👶 ${med.pregnancyRisk}` : ''}${med.renalRisk ? `\n🩺 ${med.renalRisk}` : ''}`
     ).join('\n\n');
 
     navigator.clipboard.writeText(text)

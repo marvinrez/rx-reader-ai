@@ -69,6 +69,10 @@ export const medicationSchema = z.object({
   name: z.string(),
   dosage: z.string(),
   instructions: z.string().optional(),
+  warning: z.string().optional(),
+  interactions: z.array(z.string()).optional(),
+  pregnancyRisk: z.string().optional(),
+  renalRisk: z.string().optional(),
 });
 
 export type Medication = z.infer<typeof medicationSchema>;

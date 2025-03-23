@@ -3,52 +3,78 @@ interface DosageLimit {
   min: number;
   max: number;
   unit: string;
+  interactions?: string[];
+  pregnancyRisk?: string;
+  renalRisk?: string;
+  commonAbbreviations?: string[];
 }
 
 const MEDICATION_LIMITS: Record<string, DosageLimit> = {
-  'ceporex': { min: 25, max: 100, unit: 'mg' },
-  'prednisona': { min: 2.5, max: 60, unit: 'mg' },
-  'tarex': { min: 50, max: 200, unit: 'mg' },
-  'paracetamol': { min: 250, max: 1000, unit: 'mg' },
-  'tylenol': { min: 250, max: 1000, unit: 'mg' }, // Same as paracetamol
-  'clonazepam': { min: 0.25, max: 2, unit: 'mg' },
-  'clonidina': { min: 0.1, max: 0.6, unit: 'mg' },
-  'dipirona': { min: 500, max: 1000, unit: 'mg' },
-  'ibuprofeno': { min: 200, max: 800, unit: 'mg' },
-  'amoxicilina': { min: 250, max: 875, unit: 'mg' },
+  'ceporex': { 
+    min: 25, 
+    max: 100, 
+    unit: 'mg',
+    commonAbbreviations: ['cpx', 'cpr'],
+    pregnancyRisk: 'Category B - Generally considered safe during pregnancy',
+    renalRisk: 'Dose adjustment required for severe renal impairment'
+  },
+  'prednisona': { 
+    min: 2.5, 
+    max: 60, 
+    unit: 'mg',
+    commonAbbreviations: ['pred', 'pdm'],
+    interactions: ['anticoagulants', 'nsaids'],
+    pregnancyRisk: 'Category C - Use with caution during pregnancy'
+  },
+  'paracetamol': { 
+    min: 250, 
+    max: 1000, 
+    unit: 'mg',
+    commonAbbreviations: ['pcm', 'para'],
+    interactions: ['warfarin'],
+    pregnancyRisk: 'Category A - Safe during pregnancy'
+  },
+  'clonazepam': { 
+    min: 0.25, 
+    max: 2, 
+    unit: 'mg',
+    commonAbbreviations: ['clon', 'clz'],
+    interactions: ['alcohol', 'opioids'],
+    pregnancyRisk: 'Category D - Risk during pregnancy',
+    renalRisk: 'Use with caution in renal impairment'
+  }
 };
 
-// Add brand name mapping
-const BRAND_NAMES: Record<string, string> = {
-  'tylenol': 'paracetamol',
-  'novalgina': 'dipirona',
-  'advil': 'ibuprofeno',
-  'amoxil': 'amoxicilina',
-  'rivotril': 'clonazepam',
-  'atensina': 'clonidina'
-};
-
-export function validateMedication(name: string, dosage: string): string | null {
+export function validateMedication(name: string, dosage: string): {
+  warning: string | null;
+  interactions?: string[];
+  pregnancyRisk?: string;
+  renalRisk?: string;
+} {
   const medName = name.toLowerCase();
   const limits = MEDICATION_LIMITS[medName];
   
-  if (!limits) return null;
+  if (!limits) return { warning: null };
 
   const dosageMatch = dosage.match(/(\d+(\.\d+)?)\s*(mg|ml|g)/i);
-  if (!dosageMatch) return null;
+  if (!dosageMatch) return { warning: null };
 
   const dosageValue = parseFloat(dosageMatch[1]);
   const dosageUnit = dosageMatch[3].toLowerCase();
 
-  if (dosageUnit !== limits.unit) return null;
-
-  if (dosageValue > limits.max) {
-    return `Warning: The dosage (${dosageValue}${dosageUnit}) is higher than the recommended maximum (${limits.max}${limits.unit})`;
+  let warning = null;
+  if (dosageUnit !== limits.unit) {
+    warning = `Warning: Expected ${limits.unit} but found ${dosageUnit}`;
+  } else if (dosageValue > limits.max) {
+    warning = `Warning: The dosage (${dosageValue}${dosageUnit}) is higher than recommended (${limits.max}${limits.unit})`;
+  } else if (dosageValue < limits.min) {
+    warning = `Warning: The dosage (${dosageValue}${dosageUnit}) is lower than recommended (${limits.min}${limits.unit})`;
   }
-  
-  if (dosageValue < limits.min) {
-    return `Warning: The dosage (${dosageValue}${dosageUnit}) is lower than the recommended minimum (${limits.min}${limits.unit})`;
-  }
 
-  return null;
+  return {
+    warning,
+    interactions: limits.interactions,
+    pregnancyRisk: limits.pregnancyRisk,
+    renalRisk: limits.renalRisk
+  };
 }
