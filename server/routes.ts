@@ -18,10 +18,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: 'No image provided' });
       }
 
-      // Validate image format
-      const isValidImage = imageBase64.match(/^data:image\/(jpeg|png|webp|heic);base64,/);
-      if (!isValidImage) {
-        return res.status(400).json({ message: 'Invalid image format. Please use JPEG, PNG, WEBP or HEIC images.' });
+      // Validate file format
+      const isValidFile = imageBase64.match(/^data:(image\/(jpeg|png|webp|heic)|application\/pdf);base64,/);
+      if (!isValidFile) {
+        return res.status(400).json({ message: 'Invalid format. Please use JPEG, PNG, WEBP, HEIC images or PDF files.' });
       }
 
       // Call OpenAI to analyze the image

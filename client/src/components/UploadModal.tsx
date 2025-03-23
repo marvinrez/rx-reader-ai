@@ -37,7 +37,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
     // Create a temporary element to ensure it's always a new instance
     const tempInput = document.createElement('input');
     tempInput.type = 'file';
-    tempInput.accept = 'image/*,.webp';
+    tempInput.accept = 'image/*,.webp,.pdf';
     tempInput.capture = 'environment'; // Forces camera to open
 
     // When the file is selected
@@ -64,7 +64,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
     // Same pattern: create a temporary element
     const tempInput = document.createElement('input');
     tempInput.type = 'file';
-    tempInput.accept = 'image/*,.webp';
+    tempInput.accept = 'image/*,.webp,.pdf';
     // We don't define capture to open the gallery
 
     // When the file is selected
