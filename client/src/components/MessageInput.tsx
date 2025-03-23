@@ -22,16 +22,21 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
 
   return (
     <div className="border-t border-gray-200 bg-white p-[30px]">
-      <form onSubmit={handleSubmit} className="flex items-center rounded-full bg-gray-100 px-[15px] py-[15px]">
+      <form 
+        onSubmit={handleSubmit} 
+        className="flex items-center rounded-full bg-gray-100 px-[15px] py-[15px]"
+        role="search"
+        aria-label="Message form"
+      >
         <Button 
           type="button"
           variant="ghost" 
           size="icon" 
-          className="rounded-full h-9 w-9 hover:bg-gray-200" 
+          className="rounded-full h-9 w-9 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50" 
           onClick={onAttachmentClick}
           aria-label="Attach prescription image"
         >
-          <PaperclipIcon className="h-5 w-5 text-gray-500" />
+          <PaperclipIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
         </Button>
 
         <input
@@ -42,6 +47,7 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
           placeholder="Ask any questions about your prescription"
           className="flex-1 bg-transparent p-2 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
           aria-label="Message input"
+          autoComplete="off"
         />
 
         <Button 
@@ -54,7 +60,7 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
           disabled={!message.trim()}
           aria-label="Send message"
         >
-          <span className="flex items-center justify-center text-white pl-0.5">
+          <span className="flex items-center justify-center text-white pl-0.5" aria-hidden="true">
             <CustomSendIcon />
           </span>
         </Button>
