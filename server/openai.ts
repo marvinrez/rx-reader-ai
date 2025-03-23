@@ -24,8 +24,23 @@ export async function analyzeImage(base64Image: string): Promise<string> {
   
   try {
     console.log("Base64 image length:", base64Image.length);
+    
+    // Ensure we have a clean base64 string without the data URL prefix
+    let processedImage = base64Image;
+    if (base64Image.includes('base64,')) {
+      processedImage = base64Image.split('base64,')[1];
+    }
+    
+    // Determine the MIME type based on image data
+    let mimeType = "image/jpeg"; // Default to JPEG
+    if (base64Image.includes('data:image/png')) {
+      mimeType = "image/png";
+    } else if (base64Image.includes('data:application/pdf')) {
+      mimeType = "application/pdf";
+    }
+    
     const visionResponse = await openai.chat.completions.create({
-      model: "gpt-4-vision-preview",
+      model: "gpt-4o", // Updated to use the latest model
       messages: [
         {
           role: "system",
@@ -36,18 +51,18 @@ export async function analyzeImage(base64Image: string): Promise<string> {
           content: [
             {
               type: "text",
-              text: "This is a handwritten medical prescription. Please analyze it in detail and identify all medications, dosages, and usage instructions. Format your response in a clear, structured way that's easy to understand."
+              text: "This is a handwritten medical prescription. Please analyze it in detail and identify all medications, dosages, and usage instructions. Even if the handwriting is difficult to read, do your best to extract as much information as possible."
             },
             {
               type: "image_url",
               image_url: {
-                url: `data:image/jpeg;base64,${base64Image}`
+                url: `data:${mimeType};base64,${processedImage}`
               }
             }
           ],
         },
       ],
-      max_tokens: 500,
+      max_tokens: 800, // Increased token limit for more detailed analysis
     });
 
     return visionResponse.choices[0].message.content || "Unable to analyze the prescription.";
@@ -115,11 +130,11 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
     }
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4-vision-preview",
+      model: "gpt-4o", // Updated to use the same model as the image analysis
       messages: [
         {
           role: "system",
-          content: "You are an AI specialized in extracting structured medication information from prescription analyses. Extract the medication names, dosages, and instructions into a structured format. If the image appears to be unreadable or doesn't contain a valid prescription, indicate this in your response."
+          content: "You are an AI specialized in extracting structured medication information from prescription analyses. Extract the medication names, dosages, and instructions into a structured format. If the image appears to be unreadable or doesn't contain a valid prescription, indicate this in your response. Be flexible with medication names and dosages, as prescriptions may contain less common drugs or abbreviations."
         },
         {
           role: "user",
@@ -196,7 +211,7 @@ export async function getAIResponse(userMessage: string): Promise<string> {
   
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4-vision-preview",
+      model: "gpt-4o", // Updated to use the latest model
       messages: [
         {
           role: "system",
@@ -207,7 +222,7 @@ export async function getAIResponse(userMessage: string): Promise<string> {
           content: userMessage
         }
       ],
-      max_tokens: 300
+      max_tokens: 500 // Increased token limit for more detailed responses
     });
 
     return response.choices[0].message.content || "I'm sorry, I couldn't generate a response. Please try again.";

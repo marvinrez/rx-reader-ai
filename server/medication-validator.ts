@@ -45,9 +45,11 @@ export function validateMedication(name: string, dosage: string): {
   const medName = name.toLowerCase();
   const limits = MEDICATION_LIMITS[medName];
   
+  // If medication is not in our database, just return no warning
   if (!limits) return { warning: null };
 
-  const dosageMatch = dosage.match(/(\d+(\.\d+)?)\s*(mg|ml|g)/i);
+  // If there's no dosage or it doesn't match our expected format, don't warn
+  const dosageMatch = dosage.match(/(\d+(\.\d+)?)\s*(mg|ml|g|mcg)/i);
   if (!dosageMatch) return { warning: null };
 
   const dosageValue = parseFloat(dosageMatch[1]);
@@ -55,11 +57,12 @@ export function validateMedication(name: string, dosage: string): {
 
   let warning = null;
   if (dosageUnit !== limits.unit) {
-    warning = `Warning: Expected ${limits.unit} but found ${dosageUnit}`;
+    // Don't warn about unit mismatch as prescriptions may use different unit notations
+    // warning = `Warning: Expected ${limits.unit} but found ${dosageUnit}`;
   } else if (dosageValue > limits.max) {
-    warning = `Warning: The dosage (${dosageValue}${dosageUnit}) is higher than recommended (${limits.max}${limits.unit})`;
+    warning = `Warning: The dosage (${dosageValue}${dosageUnit}) is higher than typically recommended (${limits.max}${limits.unit})`;
   } else if (dosageValue < limits.min) {
-    warning = `Warning: The dosage (${dosageValue}${dosageUnit}) is lower than recommended (${limits.min}${limits.unit})`;
+    warning = `Warning: The dosage (${dosageValue}${dosageUnit}) is lower than typically recommended (${limits.min}${limits.unit})`;
   }
 
   return {

@@ -18,21 +18,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: 'No image provided' });
       }
 
-      // Validate the image format
+      // Simplified image validation - just ensure we have data
       try {
-        // Check if the string is a valid base64 image
-        if (!imageBase64.includes('base64,')) {
-          // Extract the base64 part and test if it's a valid base64 string
-          const base64Part = imageBase64.split('base64,')[1];
-          // Basic check - make sure it's not undefined or extremely short
-          if (!base64Part || base64Part.length < 100) {
-            console.log("Invalid base64 image data");
-            return res.status(400).json({ 
-              message: 'We couldn\'t read this image. Please try a different photo format or take a new picture.',
-              detail: 'Supported formats: JPG, PNG, or PDF'
-            });
-          }
+        // Just make sure we have some data to process
+        if (!imageBase64 || imageBase64.length < 50) {
+          console.log("Invalid or empty image data");
+          return res.status(400).json({ 
+            message: 'We couldn\'t read this image. Please try a different photo.',
+            detail: 'The image data appears to be empty or corrupted'
+          });
         }
+        
+        // Process the base64 string to make sure it's in the right format for the OpenAI API
+        let processedImage = imageBase64;
+        if (imageBase64.includes('base64,')) {
+          processedImage = imageBase64.split('base64,')[1];
+        }
+        
+        // Update the imageBase64 with the processed version
+        req.body.imageBase64 = processedImage;
+        
+        console.log("Image validation passed, length:", processedImage.length);
       } catch (error) {
         console.log("Error parsing image:", error);
         return res.status(400).json({ 
