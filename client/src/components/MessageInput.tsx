@@ -44,7 +44,7 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
           id="message-input"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Ask any questions about your prescription"
+          placeholder="Ask any question about your prescription"
           className="flex-1 bg-transparent p-2 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
           aria-label="Message input"
           autoComplete="off"

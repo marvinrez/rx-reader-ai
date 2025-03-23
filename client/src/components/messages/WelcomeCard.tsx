@@ -34,9 +34,6 @@ export default function WelcomeCard() {
           </svg>
         </span>
       </p>
-      <p className="text-sm text-white">
-        Type your question
-      </p>
     </div>
   );
 }
