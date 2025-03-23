@@ -1,8 +1,14 @@
 import OpenAI from "openai";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+const apiKey = process.env.OPENAI_API_KEY;
+
+if (!apiKey) {
+  console.warn("WARNING: No OpenAI API key found in environment variables. Set OPENAI_API_KEY to use the OpenAI API.");
+}
+
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || "sk-placeholder-key-for-development"
+  apiKey: apiKey || undefined
 });
 
 /**
@@ -10,6 +16,12 @@ const openai = new OpenAI({
  */
 export async function analyzeImage(base64Image: string): Promise<string> {
   console.log("Analyzing image...");
+  
+  // Check if API key is configured before making the request
+  if (!apiKey) {
+    throw new Error("OpenAI API key is not configured. Please configure OPENAI_API_KEY in the environment variables.");
+  }
+  
   try {
     console.log("Base64 image length:", base64Image.length);
     const visionResponse = await openai.chat.completions.create({
@@ -73,6 +85,15 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
   additionalInfo?: string;
   unreadableImage?: boolean;
 }> {
+  // Check if API key is configured before making the request
+  if (!apiKey) {
+    return { 
+      medications: [],
+      unreadableImage: true,
+      additionalInfo: "AI service is not available. Please contact support."
+    };
+  }
+  
   try {
     // First, check if the analysis indicates that the image was unreadable
     const unreadableIndicators = [
@@ -129,7 +150,7 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
     }
 
     // Add validation warnings to medications
-    const medicationsWithWarnings = result.medications.map(med => {
+    const medicationsWithWarnings = result.medications.map((med: { name: string; dosage: string; instructions?: string }) => {
       const warning = validateMedication(med.name, med.dosage);
       return warning ? { ...med, warning } : med;
     });
@@ -168,6 +189,11 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
  * Gets an AI response for a user message
  */
 export async function getAIResponse(userMessage: string): Promise<string> {
+  // Check if API key is configured before making the request
+  if (!apiKey) {
+    return "Sorry, the AI service is currently unavailable. Please contact support for assistance.";
+  }
+  
   try {
     const response = await openai.chat.completions.create({
       model: "gpt-4-vision-preview",
