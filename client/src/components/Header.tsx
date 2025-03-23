@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import React, { useState } from 'react';
 
+const menuItemStyles = "hover:bg-gray-100"; // Added style for hover effect
+
 export default function Header() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState(false);
@@ -61,16 +63,10 @@ export default function Header() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem 
-              onSelect={() => setAboutOpen(true)}
-              aria-label="Learn more about the RX Reader"
-            >
+            <DropdownMenuItem className={menuItemStyles} onSelect={() => setAboutOpen(true)} aria-label="Learn more about the RX Reader">
               About
             </DropdownMenuItem>
-            <DropdownMenuItem 
-              onSelect={() => setFaqOpen(true)} 
-              aria-label="Frequently asked questions"
-            >
+            <DropdownMenuItem className={menuItemStyles} onSelect={() => setFaqOpen(true)} aria-label="Frequently asked questions">
               FAQ
             </DropdownMenuItem>
           </DropdownMenuContent>
