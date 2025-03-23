@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import React, { useState } from 'react';
 
-const menuItemStyles = "hover:bg-gray-100"; // Added style for hover effect
+const menuItemStyles = "hover:bg-gray-100 focus:bg-gray-100 cursor-pointer"; // Enhanced hover and focus styles
 
 export default function Header() {
   const [aboutOpen, setAboutOpen] = useState(false);
