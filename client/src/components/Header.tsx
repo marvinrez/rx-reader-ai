@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { MoreVertical, Info } from "lucide-react";
 import {
@@ -43,15 +42,23 @@ export default function Header() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              aria-label="Menu de opções"
+              role="button"
+            >
               <MoreVertical className="h-5 w-5" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={() => setAboutOpen(true)}>
+            <DropdownMenuItem 
+              onSelect={() => setAboutOpen(true)}
+              title="Saiba mais sobre o RX Reader"
+            >
               About
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setFaqOpen(true)}>
+            <DropdownMenuItem onSelect={() => setFaqOpen(true)} title="Perguntas frequentes">
               FAQ
             </DropdownMenuItem>
           </DropdownMenuContent>
