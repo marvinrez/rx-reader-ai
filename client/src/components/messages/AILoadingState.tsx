@@ -12,7 +12,6 @@ export default function AILoadingState() {
       >
         <Sparkles className="h-4 w-4 animate-pulse" aria-hidden="true" />
         <p className="text-sm flex items-center">
-          I'll help you understand how to read this info
           <span className="ml-[2px] flex" aria-hidden="true">
             <span className="animate-[pulse_1.4s_infinite]">.</span>
             <span className="animate-[pulse_1.4s_0.2s_infinite]">.</span>
