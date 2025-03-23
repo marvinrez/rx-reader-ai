@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import React, { useState } from 'react';
 
-const menuItemStyles = "hover:bg-gray-100 focus:bg-gray-100 cursor-pointer"; // Enhanced hover and focus styles
+const menuItemStyles = "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground";
 
 export default function Header() {
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -62,7 +62,7 @@ export default function Header() {
               <MoreVertical className="h-5 w-5" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="w-[200px] p-2">
             <DropdownMenuItem className={menuItemStyles} onSelect={() => setAboutOpen(true)} aria-label="Learn more about the RX Reader">
               About
             </DropdownMenuItem>
