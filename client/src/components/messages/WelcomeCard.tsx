@@ -8,14 +8,14 @@ export default function WelcomeCard() {
       <h2 id="welcome-heading" className="font-semibold text-lg mb-2">
         Welcome to RX Reader – Your Personal Prescription Decoder by AI!
       </h2>
-      <p className="text-sm mb-2">
+      <p className="text-sm mb-2 text-white">
         Having trouble reading a handwritten prescription?
       </p>
-      <p className="text-sm mb-3">
+      <p className="text-sm mb-3 text-white">
         Simply upload an image of the medical prescription, and let RX Reader AI decode the medication names and instructions for you.
       </p>
-      <h3 className="text-sm font-bold">Upload your prescription</h3>
-      <p className="text-sm">
+      <h3 className="text-sm font-bold text-white">Upload your prescription</h3>
+      <p className="text-sm text-white">
         Share your requirements and 'Update Prescription' by tapping on
         <span 
           className="inline-flex items-center justify-center w-5 h-5 bg-white bg-opacity-20 rounded-full ml-1"
@@ -24,7 +24,7 @@ export default function WelcomeCard() {
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
-            className="h-3 w-3" 
+            className="h-3 w-3 text-white" 
             fill="none" 
             viewBox="0 0 24 24" 
             stroke="currentColor"
