@@ -109,20 +109,20 @@ export default function Header() {
             <div className="px-3 py-4">
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-medium">Como meus dados são protegidos?</h3>
-                  <p className="text-sm text-gray-700">Seus dados são processados com segurança e não são armazenados permanentemente.</p>
+                  <h3 className="font-medium">How is my data protected?</h3>
+                  <p className="text-sm text-gray-700">Your data is processed securely and is not permanently stored.</p>
                 </div>
                 <div>
-                  <h3 className="font-medium">O que fazer se o app não conseguir ler minha prescrição?</h3>
-                  <p className="text-sm text-gray-700">Tente tirar uma foto mais clara com boa iluminação, ou peça orientação diretamente ao AI.</p>
+                  <h3 className="font-medium">What if the app can't read my prescription?</h3>
+                  <p className="text-sm text-gray-700">Try taking a clearer photo with good lighting, or ask the AI directly for guidance.</p>
                 </div>
                 <div>
-                  <h3 className="font-medium">O app fornece aconselhamento médico?</h3>
-                  <p className="text-sm text-gray-700">Não, o RX Reader apenas ajuda a decodificar prescrições. Sempre consulte um profissional de saúde.</p>
+                  <h3 className="font-medium">Does the app provide medical advice?</h3>
+                  <p className="text-sm text-gray-700">No, RX Reader only helps decode prescriptions. Always consult with a healthcare professional.</p>
                 </div>
                 <div>
-                  <h3 className="font-medium">Como faço para obter o melhor resultado na leitura?</h3>
-                  <p className="text-sm text-gray-700">Tire uma foto bem iluminada, focada e enquadre toda a receita na imagem.</p>
+                  <h3 className="font-medium">How can I get the best reading results?</h3>
+                  <p className="text-sm text-gray-700">Take a well-lit, focused photo and frame the entire prescription in the image.</p>
                 </div>
                 <div>
                   <h3 className="font-medium">Os alertas são sempre precisos?</h3>
