@@ -164,15 +164,9 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
       };
     }
 
-    // Add validation warnings to medications
-    const medicationsWithWarnings = result.medications.map((med: { name: string; dosage: string; instructions?: string }) => {
-      const warning = validateMedication(med.name, med.dosage);
-      return warning ? { ...med, warning } : med;
-    });
-
-    // Ensure the response has the expected structure
+    // Return medications without warnings
     return {
-      medications: medicationsWithWarnings,
+      medications: result.medications,
       additionalInfo: result.additionalInfo || undefined,
       unreadableImage: false
     };

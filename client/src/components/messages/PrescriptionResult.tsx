@@ -88,25 +88,7 @@ export default function PrescriptionResult({ medications, unreadableImage, addit
               {medication.instructions && 
                 <p className="text-sm" aria-label="Instructions">{medication.instructions}</p>
               }
-              {medication.warning && (
-                <div 
-                  className="mt-1 flex items-start gap-1.5" 
-                  role="alert" 
-                  aria-labelledby={`warning-${index}`}
-                >
-                  <AlertTriangle className="h-4 w-4 text-yellow-300 shrink-0 mt-0.5" aria-hidden="true" />
-                  <p id={`warning-${index}`} className="text-sm text-yellow-300">{medication.warning}</p>
-                </div>
-              )}
-              {medication.interactions && medication.interactions.length > 0 && (
-                <div className="mt-1" role="alert" aria-labelledby={`interactions-${index}`}>
-                  <p id={`interactions-${index}`} className="text-sm text-yellow-200">
-                    <span aria-hidden="true">⚠️</span> 
-                    <span className="sr-only">Warning: </span>
-                    Interactions: {medication.interactions.join(', ')}
-                  </p>
-                </div>
-              )}
+              
               {medication.pregnancyRisk && (
                 <div className="mt-1" aria-labelledby={`pregnancy-${index}`}>
                   <p id={`pregnancy-${index}`} className="text-sm">
