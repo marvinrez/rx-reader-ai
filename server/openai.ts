@@ -9,7 +9,9 @@ const openai = new OpenAI({
  * Analyzes a prescription image using OpenAI's vision model
  */
 export async function analyzeImage(base64Image: string): Promise<string> {
+  console.log("Analyzing image...");
   try {
+    console.log("Base64 image length:", base64Image.length);
     const visionResponse = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [

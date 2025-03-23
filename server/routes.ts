@@ -9,7 +9,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Analyze prescription image
   app.post('/api/prescriptions/analyze', async (req, res) => {
     try {
+      console.log("Received analyze request");
       const { imageBase64 } = req.body;
+      
+      console.log("Image received:", imageBase64 ? "yes" : "no");
       
       if (!imageBase64) {
         return res.status(400).json({ message: 'No image provided' });
