@@ -68,6 +68,12 @@ export default function PrescriptionResult({ medications, unreadableImage, addit
               <p className="font-medium">{medication.name}</p>
               <p className="text-sm">{medication.dosage}</p>
               {medication.instructions && <p className="text-sm">{medication.instructions}</p>}
+              {medication.warning && (
+                <div className="mt-1 flex items-start gap-1.5">
+                  <AlertTriangle className="h-4 w-4 text-yellow-300 shrink-0 mt-0.5" />
+                  <p className="text-sm text-yellow-300">{medication.warning}</p>
+                </div>
+              )}
               {index < medications.length - 1 && (
                 <div className="w-full h-px bg-white opacity-20 my-2"></div>
               )}

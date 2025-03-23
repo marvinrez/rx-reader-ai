@@ -59,11 +59,14 @@ export async function analyzeImage(base64Image: string): Promise<string> {
 /**
  * Extracts structured medication information from the analysis text
  */
+import { validateMedication } from './medication-validator';
+
 export async function extractMedicationInfo(analysisText: string): Promise<{
   medications: Array<{
     name: string;
     dosage: string;
     instructions?: string;
+    warning?: string;
   }>;
   additionalInfo?: string;
   unreadableImage?: boolean;
@@ -123,9 +126,15 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
       };
     }
     
+    // Add validation warnings to medications
+    const medicationsWithWarnings = result.medications.map(med => {
+      const warning = validateMedication(med.name, med.dosage);
+      return warning ? { ...med, warning } : med;
+    });
+    
     // Ensure the response has the expected structure
     return {
-      medications: result.medications,
+      medications: medicationsWithWarnings,
       additionalInfo: result.additionalInfo || undefined,
       unreadableImage: false
     };
