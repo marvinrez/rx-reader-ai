@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { MoreVertical, Info } from "lucide-react";
 import {
@@ -13,9 +14,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Header() {
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [faqOpen, setFaqOpen] = useState(false);
+
   return (
     <header className="flex items-center justify-between p-[15px] bg-gradient-to-r from-[#E8F5FF] to-[#FFFFFF] border-b border-gray-200">
       <div className="flex items-center">
@@ -44,16 +48,21 @@ export default function Header() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem >
-              {/*Removed onSelect to avoid unnecessary click handling*/}
+            <DropdownMenuItem onSelect={() => setAboutOpen(true)}>
               About
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setFaqOpen(true)}>
+              FAQ
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Dialog>
+
+        <Dialog open={aboutOpen} onOpenChange={setAboutOpen}>
           <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>About RX Reader AI</DialogTitle>
+            </DialogHeader>
             <div className="px-3 py-4">
-              <h2 className="text-lg font-semibold">About RX Reader AI</h2>
               <div className="mt-3">
                 <h3 className="font-medium mb-2">Key Features & Safety Measures:</h3>
                 <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
@@ -81,6 +90,30 @@ export default function Header() {
                   Marcos Rezende
                 </a>.
               </p>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        <Dialog open={faqOpen} onOpenChange={setFaqOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Frequently Asked Questions</DialogTitle>
+            </DialogHeader>
+            <div className="px-3 py-4">
+              <div className="space-y-4">
+                <div>
+                  <h3 className="font-medium">Is my prescription data private?</h3>
+                  <p className="text-sm text-gray-700">Yes, your prescription data is processed securely and not stored permanently.</p>
+                </div>
+                <div>
+                  <h3 className="font-medium">What if the app can't read my prescription?</h3>
+                  <p className="text-sm text-gray-700">Try taking a clearer photo with good lighting, or ask the AI for guidance directly.</p>
+                </div>
+                <div>
+                  <h3 className="font-medium">Can the app provide medical advice?</h3>
+                  <p className="text-sm text-gray-700">No, RX Reader only helps decode prescriptions. Always consult with a healthcare professional for medical advice.</p>
+                </div>
+              </div>
             </div>
           </DialogContent>
         </Dialog>
