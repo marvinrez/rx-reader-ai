@@ -120,6 +120,18 @@ export default function Header() {
                   <h3 className="font-medium">Can the app provide medical advice?</h3>
                   <p className="text-sm text-gray-700">No, RX Reader only helps decode prescriptions. Always consult with a healthcare professional for medical advice.</p>
                 </div>
+                <div>
+                  <h3 className="font-medium">How do I ensure the best photo quality?</h3>
+                  <p className="text-sm text-gray-700">Take photos in good lighting, ensure the prescription is flat and clear, and keep the camera steady.</p>
+                </div>
+                <div>
+                  <h3 className="font-medium">What formats are supported?</h3>
+                  <p className="text-sm text-gray-700">We support common image formats like JPEG, PNG, and GIF. Photos taken directly from your device work best.</p>
+                </div>
+                <div>
+                  <h3 className="font-medium">What if I find an error?</h3>
+                  <p className="text-sm text-gray-700">Use the feedback buttons to report any inaccuracies. This helps improve the system for everyone.</p>
+                </div>
               </div>
             </div>
           </DialogContent>
