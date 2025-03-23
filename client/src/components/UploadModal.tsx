@@ -12,7 +12,52 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
   // Separate references for each input
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
-
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  
+  // Trap focus inside modal when it opens
+  useEffect(() => {
+    if (isOpen) {
+      // Focus the close button when modal opens
+      setTimeout(() => {
+        closeButtonRef.current?.focus();
+      }, 100);
+      
+      // Handle keyboard navigation
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          onClose();
+        }
+        
+        // Trap focus inside modal
+        if (e.key === 'Tab') {
+          // Define focusable elements
+          const focusableElements = document.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
+          
+          const firstElement = focusableElements[0] as HTMLElement;
+          const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+          
+          // If shift+tab and on first element, focus last element
+          if (e.shiftKey && document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          } 
+          // If tab and on last element, loop back to first element
+          else if (!e.shiftKey && document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      };
+      
+      document.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [isOpen, onClose]);
+  
   if (!isOpen) return null;
 
   // Function to process files
@@ -104,6 +149,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
         <div className="flex justify-between items-center mb-2">
           <h3 id="upload-prescription-title" className="text-lg font-medium">Upload Prescription</h3>
           <button 
+            ref={closeButtonRef}
             className="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/50"
             onClick={onClose}
             aria-label="Close upload dialog"
