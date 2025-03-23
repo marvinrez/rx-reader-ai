@@ -109,28 +109,28 @@ export default function Header() {
             <div className="px-3 py-4">
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-medium">Is my prescription data private?</h3>
-                  <p className="text-sm text-gray-700">Yes, your prescription data is processed securely and not stored permanently.</p>
+                  <h3 className="font-medium">Como meus dados são protegidos?</h3>
+                  <p className="text-sm text-gray-700">Seus dados são processados com segurança e não são armazenados permanentemente.</p>
                 </div>
                 <div>
-                  <h3 className="font-medium">What if the app can't read my prescription?</h3>
-                  <p className="text-sm text-gray-700">Try taking a clearer photo with good lighting, or ask the AI for guidance directly.</p>
+                  <h3 className="font-medium">O que fazer se o app não conseguir ler minha prescrição?</h3>
+                  <p className="text-sm text-gray-700">Tente tirar uma foto mais clara com boa iluminação, ou peça orientação diretamente ao AI.</p>
                 </div>
                 <div>
-                  <h3 className="font-medium">Can the app provide medical advice?</h3>
-                  <p className="text-sm text-gray-700">No, RX Reader only helps decode prescriptions. Always consult with a healthcare professional for medical advice.</p>
+                  <h3 className="font-medium">O app fornece aconselhamento médico?</h3>
+                  <p className="text-sm text-gray-700">Não, o RX Reader apenas ajuda a decodificar prescrições. Sempre consulte um profissional de saúde.</p>
                 </div>
                 <div>
-                  <h3 className="font-medium">How do I ensure the best photo quality?</h3>
-                  <p className="text-sm text-gray-700">Take photos in good lighting, ensure the prescription is flat and clear, and keep the camera steady.</p>
+                  <h3 className="font-medium">Como faço para obter o melhor resultado na leitura?</h3>
+                  <p className="text-sm text-gray-700">Tire uma foto bem iluminada, focada e enquadre toda a receita na imagem.</p>
                 </div>
                 <div>
-                  <h3 className="font-medium">What formats are supported?</h3>
-                  <p className="text-sm text-gray-700">We support common image formats like JPEG, PNG, and GIF. Photos taken directly from your device work best.</p>
+                  <h3 className="font-medium">Os alertas são sempre precisos?</h3>
+                  <p className="text-sm text-gray-700">Os alertas são baseados em dados médicos, mas sempre confirme com seu médico ou farmacêutico.</p>
                 </div>
                 <div>
-                  <h3 className="font-medium">What if I find an error?</h3>
-                  <p className="text-sm text-gray-700">Use the feedback buttons to report any inaccuracies. This helps improve the system for everyone.</p>
+                  <h3 className="font-medium">Posso usar o app offline?</h3>
+                  <p className="text-sm text-gray-700">O RX Reader precisa de conexão com internet para processar as imagens e fornecer resultados.</p>
                 </div>
               </div>
             </div>
