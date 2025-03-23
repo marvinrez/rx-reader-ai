@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import React, { useState } from 'react';
 
-const menuItemStyles = "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground";
+const menuItemStyles = "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none hover:bg-gray-100 focus:bg-[#2A6F62] focus:text-white data-[state=open]:bg-[#2A6F62] data-[state=open]:text-white";
 
 export default function Header() {
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -59,7 +59,7 @@ export default function Header() {
               aria-label="Options menu"
               className="focus:ring-2 focus:ring-primary/50 focus:outline-none"
             >
-              <MoreVertical className="h-5 w-5" aria-hidden="true" />
+              <MoreVertical className="h-5 w-5 group-data-[state=open]:text-white" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[200px] p-2">
