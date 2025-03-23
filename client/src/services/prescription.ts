@@ -8,18 +8,35 @@ export async function analyzePrescriptionImage(imageBase64: string): Promise<Pre
   } catch (error) {
     console.error('Error analyzing prescription:', error);
     
-    // Check if it's related to OpenAI API or file size
-    let message = error instanceof Error ? error.message : 'Failed to analyze the prescription';
-    let errorType: 'api' | 'size' | 'general' = 'general';
+    // Check for server-provided error information
+    let message = 'We couldn\'t analyze your prescription. Please try again.';
+    let errorType: 'api' | 'format' | 'size' | 'general' = 'general';
     
-    if (message.includes('quota') || message.includes('exceeded')) {
-      message = 'OpenAI API quota exceeded. Please contact support for assistance.';
-      errorType = 'api';
-    } else if (message.includes('api key') || message.includes('apiKey')) {
-      message = 'Invalid API key. Please contact support to update the API key.';
-      errorType = 'api';
-    } else if (message.includes('413') || message.includes('too large') || message.includes('payload')) {
-      message = 'The image is too large. Please try with a smaller or reduced image.';
+    // Try to extract error details from the response
+    try {
+      if (error instanceof Error && 'data' in error) {
+        const errorData = (error as any).data;
+        if (errorData && typeof errorData === 'object') {
+          // Use server-provided error message if available
+          if (errorData.message) {
+            message = errorData.message;
+          }
+          
+          // Use server-provided error type if available
+          if (errorData.type) {
+            errorType = errorData.type;
+          }
+        }
+      }
+    } catch (parseError) {
+      console.warn('Failed to parse error details:', parseError);
+    }
+    
+    // Additional client-side error checks
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    if (errorMessage.includes('413') || errorMessage.includes('too large') || errorMessage.includes('payload')) {
+      message = 'The image is too large. Please try with a smaller image.';
       errorType = 'size';
     }
     
@@ -38,16 +55,28 @@ export async function sendMessage(content: string): Promise<{ response: string }
   } catch (error) {
     console.error('Error sending message:', error);
     
-    // Better handling of OpenAI API related errors
-    let message = error instanceof Error ? error.message : 'Failed to send message';
+    // Check for server-provided error information
+    let message = 'We couldn\'t send your message. Please try again.';
     let errorType: 'api' | 'general' = 'general';
     
-    if (message.includes('quota') || message.includes('exceeded')) {
-      message = 'OpenAI API quota exceeded. Please contact support for assistance.';
-      errorType = 'api';
-    } else if (message.includes('api key') || message.includes('apiKey')) {
-      message = 'Invalid API key. Please contact support to update the API key.';
-      errorType = 'api';
+    // Try to extract error details from the response
+    try {
+      if (error instanceof Error && 'data' in error) {
+        const errorData = (error as any).data;
+        if (errorData && typeof errorData === 'object') {
+          // Use server-provided error message if available
+          if (errorData.message) {
+            message = errorData.message;
+          }
+          
+          // Use server-provided error type if available
+          if (errorData.type) {
+            errorType = errorData.type;
+          }
+        }
+      }
+    } catch (parseError) {
+      console.warn('Failed to parse error details:', parseError);
     }
     
     // Customize the error object to include the type
@@ -63,6 +92,22 @@ export async function submitFeedback(messageId: number, isAccurate: boolean): Pr
     await apiRequest('POST', '/api/feedbacks', { messageId, isAccurate });
   } catch (error) {
     console.error('Error submitting feedback:', error);
-    throw new Error(error instanceof Error ? error.message : 'Failed to submit feedback');
+    
+    // Check for server-provided error information
+    let message = 'We couldn\'t save your feedback. Please try again.';
+    
+    // Try to extract error details from the response
+    try {
+      if (error instanceof Error && 'data' in error) {
+        const errorData = (error as any).data;
+        if (errorData && typeof errorData === 'object' && errorData.message) {
+          message = errorData.message;
+        }
+      }
+    } catch (parseError) {
+      console.warn('Failed to parse error details:', parseError);
+    }
+    
+    throw new Error(message);
   }
 }

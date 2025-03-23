@@ -18,16 +18,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: 'No image provided' });
       }
 
-      // Validate file format - using a more lenient check
-      // Just verify the string starts with data: and contains base64
-      const hasDataPrefix = imageBase64.startsWith('data:');
-      const containsBase64 = imageBase64.includes('base64,');
-      
-      if (!hasDataPrefix || !containsBase64) {
-        console.log("Possibly invalid format detected");
+      // Validate the image format
+      try {
+        // Check if the string is a valid base64 image
+        if (!imageBase64.includes('base64,')) {
+          // Extract the base64 part and test if it's a valid base64 string
+          const base64Part = imageBase64.split('base64,')[1];
+          // Basic check - make sure it's not undefined or extremely short
+          if (!base64Part || base64Part.length < 100) {
+            console.log("Invalid base64 image data");
+            return res.status(400).json({ 
+              message: 'We couldn\'t read this image. Please try a different photo format or take a new picture.',
+              detail: 'Supported formats: JPG, PNG, or PDF'
+            });
+          }
+        }
+      } catch (error) {
+        console.log("Error parsing image:", error);
         return res.status(400).json({ 
-          message: 'We couldn\'t read this image. Please try a different photo format or take a new picture.',
-          detail: 'Supported formats: JPG, PNG, or PDF'
+          message: 'We couldn\'t read this image. Please try again with a different photo.',
+          detail: 'There was an error processing your image'
         });
       }
 
@@ -54,8 +64,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(200).json(medicationInfo);
     } catch (error) {
       console.error('Error analyzing prescription:', error);
+      // Create a user-friendly error message
+      let errorMessage = 'We had trouble analyzing your prescription. Please try again.';
+      let errorType = 'general';
+      
+      if (error instanceof Error) {
+        console.log("Error details:", error.message);
+        
+        // Customize based on error type
+        if (error.message.includes('API key')) {
+          errorMessage = 'Our service is temporarily unavailable. Please try again later.';
+          errorType = 'api';
+        } else if (error.message.includes('quota')) {
+          errorMessage = 'Our service is currently busy. Please try again in a few minutes.';
+          errorType = 'api';
+        } else if (error.message.includes('format') || error.message.includes('image')) {
+          errorMessage = 'We couldn\'t read this image. Please try a different photo.';
+          errorType = 'format';
+        }
+      }
+      
       return res.status(500).json({ 
-        message: error instanceof Error ? error.message : 'Failed to analyze prescription' 
+        message: errorMessage,
+        type: errorType
       });
     }
   });
@@ -91,8 +122,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(200).json({ response });
     } catch (error) {
       console.error('Error processing message:', error);
+      // Create a user-friendly error message
+      let errorMessage = 'We had trouble processing your message. Please try again.';
+      let errorType = 'general';
+      
+      if (error instanceof Error) {
+        console.log("Error details:", error.message);
+        
+        // Customize based on error type
+        if (error.message.includes('API key')) {
+          errorMessage = 'Our service is temporarily unavailable. Please try again later.';
+          errorType = 'api';
+        } else if (error.message.includes('quota')) {
+          errorMessage = 'Our service is currently busy. Please try again in a few minutes.';
+          errorType = 'api';
+        }
+      }
+      
       return res.status(500).json({ 
-        message: error instanceof Error ? error.message : 'Failed to process message' 
+        message: errorMessage,
+        type: errorType
       });
     }
   });
@@ -116,7 +165,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error submitting feedback:', error);
       return res.status(500).json({ 
-        message: error instanceof Error ? error.message : 'Failed to submit feedback' 
+        message: 'We couldn\'t save your feedback. Please try again.'
       });
     }
   });
