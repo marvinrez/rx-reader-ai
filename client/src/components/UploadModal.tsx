@@ -96,13 +96,17 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
     <div 
       className="fixed inset-0 bg-black bg-opacity-75 flex flex-col justify-end items-center z-10"
       onClick={handleOverlayClick}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="upload-prescription-title"
     >
       <div className="bg-white w-full rounded-t-xl p-4 space-y-4">
         <div className="flex justify-between items-center mb-2">
-          <h3 className="text-lg font-medium">Upload Prescription</h3>
+          <h3 id="upload-prescription-title" className="text-lg font-medium">Upload Prescription</h3>
           <button 
-            className="p-2 rounded-full hover:bg-gray-100"
+            className="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/50"
             onClick={onClose}
+            aria-label="Close upload dialog"
           >
             <X className="h-6 w-6" />
           </button>
@@ -110,29 +114,31 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
 
         {/* Camera option */}
         <button 
-          className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors group"
+          className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors group focus:outline-none focus:ring-2 focus:ring-primary/50"
           onClick={openCamera}
+          aria-label="Take photo with camera"
         >
           <div className="w-12 h-12 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#1A7F77] group-hover:border-[#1A7F77] transition-colors">
-            <Camera className="h-6 w-6 text-gray-600 group-hover:text-white transition-colors" />
+            <Camera className="h-6 w-6 text-gray-600 group-hover:text-white transition-colors" aria-hidden="true" />
           </div>
           <div className="text-left">
             <p className="font-medium text-lg">Camera</p>
-            <p className="text-sm text-gray-500">Take a photo of your prescription</p>
+            <p className="text-sm text-gray-700">Take a photo of your prescription</p>
           </div>
         </button>
 
         {/* Gallery option */}
         <button 
-          className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors group"
+          className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors group focus:outline-none focus:ring-2 focus:ring-primary/50"
           onClick={openGallery}
+          aria-label="Choose from gallery"
         >
           <div className="w-12 h-12 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-[#1A7F77] group-hover:border-[#1A7F77] transition-colors">
-            <Image className="h-6 w-6 text-gray-600 group-hover:text-white transition-colors" />
+            <Image className="h-6 w-6 text-gray-600 group-hover:text-white transition-colors" aria-hidden="true" />
           </div>
           <div className="text-left">
             <p className="font-medium text-lg">Photos</p>
-            <p className="text-sm text-gray-500">Choose from your gallery</p>
+            <p className="text-sm text-gray-700">Choose from your gallery</p>
           </div>
         </button>
       </div>

@@ -30,11 +30,20 @@ export default function Header() {
 
       <div className="flex items-center gap-2">
         <div className="group relative">
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <Info className="h-4 w-4" />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-8 w-8 focus:ring-2 focus:ring-primary/50 focus:outline-none"
+            aria-label="Important disclaimer about AI accuracy"
+          >
+            <Info className="h-4 w-4" aria-hidden="true" />
           </Button>
-          <div className="absolute right-0 top-full mt-2 w-64 p-2 bg-white border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-            <p className="text-xs text-gray-500">
+          <div 
+            className="absolute right-0 top-full mt-2 w-64 p-2 bg-white border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+            role="tooltip"
+            id="accuracy-disclaimer"
+          >
+            <p className="text-xs text-gray-700">
               AI responses may not be accurate. Always verify information with healthcare professionals.
             </p>
           </div>
@@ -45,29 +54,32 @@ export default function Header() {
             <Button 
               variant="ghost" 
               size="icon"
-              aria-label="Menu de opções"
-              role="button"
+              aria-label="Options menu"
+              className="focus:ring-2 focus:ring-primary/50 focus:outline-none"
             >
-              <MoreVertical className="h-5 w-5" />
+              <MoreVertical className="h-5 w-5" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem 
               onSelect={() => setAboutOpen(true)}
-              title="Saiba mais sobre o RX Reader"
+              aria-label="Learn more about the RX Reader"
             >
               About
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setFaqOpen(true)} title="Perguntas frequentes">
+            <DropdownMenuItem 
+              onSelect={() => setFaqOpen(true)} 
+              aria-label="Frequently asked questions"
+            >
               FAQ
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
         <Dialog open={aboutOpen} onOpenChange={setAboutOpen}>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className="sm:max-w-md" aria-labelledby="about-title">
             <DialogHeader>
-              <DialogTitle>About RX Reader AI</DialogTitle>
+              <DialogTitle id="about-title">About RX Reader AI</DialogTitle>
             </DialogHeader>
             <div className="px-3 py-4">
               <div className="mt-3">
@@ -81,7 +93,7 @@ export default function Header() {
                 </ul>
               </div>
               <p className="text-sm font-medium text-red-600 mt-2">
-                ⚠️ Important Disclaimer
+                <span aria-hidden="true">⚠️</span> <span>Important Disclaimer</span>
               </p>
               <p className="text-sm text-gray-700">
                 This AI system may make mistakes in interpretation and should never be used as the sole source for medical decisions. Always verify all information with your healthcare provider and pharmacist.
@@ -93,6 +105,7 @@ export default function Header() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"
+                  aria-label="Visit Marcos Rezende's website"
                 >
                   Marcos Rezende
                 </a>.
@@ -102,9 +115,9 @@ export default function Header() {
         </Dialog>
 
         <Dialog open={faqOpen} onOpenChange={setFaqOpen}>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className="sm:max-w-md" aria-labelledby="faq-title">
             <DialogHeader>
-              <DialogTitle>Frequently Asked Questions</DialogTitle>
+              <DialogTitle id="faq-title">Frequently Asked Questions</DialogTitle>
             </DialogHeader>
             <div className="px-3 py-4">
               <div className="space-y-4">
@@ -124,13 +137,13 @@ export default function Header() {
                   <h3 className="font-medium">How can I get the best reading results?</h3>
                   <p className="text-sm text-gray-700">Take a well-lit, focused photo and frame the entire prescription in the image.</p>
                 </div>
-                <div>
-                  <h3 className="font-medium">Os alertas são sempre precisos?</h3>
-                  <p className="text-sm text-gray-700">Os alertas são baseados em dados médicos, mas sempre confirme com seu médico ou farmacêutico.</p>
+                <div lang="pt-BR">
+                  <h3 className="font-medium">Are the alerts always accurate?</h3>
+                  <p className="text-sm text-gray-700">Alerts are based on medical data, but always confirm with your doctor or pharmacist.</p>
                 </div>
-                <div>
-                  <h3 className="font-medium">Posso usar o app offline?</h3>
-                  <p className="text-sm text-gray-700">O RX Reader precisa de conexão com internet para processar as imagens e fornecer resultados.</p>
+                <div lang="pt-BR">
+                  <h3 className="font-medium">Can I use the app offline?</h3>
+                  <p className="text-sm text-gray-700">RX Reader needs an internet connection to process images and provide results.</p>
                 </div>
               </div>
             </div>

@@ -29,16 +29,19 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
           size="icon" 
           className="rounded-full h-9 w-9 hover:bg-gray-200" 
           onClick={onAttachmentClick}
+          aria-label="Attach prescription image"
         >
           <PaperclipIcon className="h-5 w-5 text-gray-500" />
         </Button>
 
         <input
           type="text"
+          id="message-input"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Ask any questions about your prescription"
-          className="flex-1 bg-transparent p-2 focus:outline-none text-sm"
+          className="flex-1 bg-transparent p-2 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
+          aria-label="Message input"
         />
 
         <Button 
@@ -49,6 +52,7 @@ export default function MessageInput({ onSendMessage, onAttachmentClick }: Messa
             message.trim() ? "bg-[#1A7F77] hover:bg-[#156c65]" : "bg-[#1A7F77]/70"
           )}
           disabled={!message.trim()}
+          aria-label="Send message"
         >
           <span className="flex items-center justify-center text-white pl-0.5">
             <CustomSendIcon />
