@@ -39,20 +39,20 @@ export default function Header() {
               </DialogHeader>
               <div className="space-y-4">
                 <div>
-                  <p className="font-medium">How accurate is the prescription reading?</p>
-                  <p className="text-sm text-gray-600">RX Reader uses advanced AI to interpret prescriptions, but accuracy may vary depending on image quality. Always verify with your healthcare provider.</p>
+                  <p className="font-medium">How does the confidence mode work?</p>
+                  <p className="text-sm text-gray-600">When the AI is uncertain about its interpretation, it will explicitly indicate this and may ask for a clearer image or additional context.</p>
                 </div>
                 <div>
-                  <p className="font-medium">Is my prescription data private?</p>
-                  <p className="text-sm text-gray-600">Yes, your prescription data is processed securely and not stored permanently.</p>
+                  <p className="font-medium">How do you handle data privacy?</p>
+                  <p className="text-sm text-gray-600">We use end-to-end encryption and process all data without permanent storage. Your prescription data is completely private and secure.</p>
                 </div>
                 <div>
-                  <p className="font-medium">What if the app can't read my prescription?</p>
-                  <p className="text-sm text-gray-600">Try taking a clearer photo with good lighting, or ask the AI for guidance directly.</p>
+                  <p className="font-medium">What happens if the AI is unsure about interpretation?</p>
+                  <p className="text-sm text-gray-600">The system will notify you of its uncertainty and may request additional information or a clearer image to ensure accuracy.</p>
                 </div>
                 <div>
-                  <p className="font-medium">Can the app provide medical advice?</p>
-                  <p className="text-sm text-gray-600">No, RX Reader only helps decode prescriptions. Always consult with a healthcare professional for medical advice.</p>
+                  <p className="font-medium">How do you handle regional differences in prescriptions?</p>
+                  <p className="text-sm text-gray-600">Our system is regularly reviewed and updated to account for regional terminology and prescription formats across different healthcare systems.</p>
                 </div>
               </div>
             </DialogContent>
@@ -87,7 +87,20 @@ export default function Header() {
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col space-y-3 mt-4">
-              <p className="text-sm font-medium text-red-600">
+              <p className="text-sm font-medium text-primary">
+                Privacy & Responsibility First
+              </p>
+              <div className="text-sm text-gray-700 space-y-2">
+                <p>Healthcare data is sensitive — RX Reader was designed with privacy and responsibility first:</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>All data is processed without persistent storage</li>
+                  <li>End-to-end encryption is enforced from input to interpretation</li>
+                  <li>A "confidence mode" warns users when AI interpretation is uncertain</li>
+                  <li>The system is regularly reviewed for biases related to handwriting, regional terminology, and prescription ambiguity</li>
+                  <li>Plans for GDPR compliance and future alignment with HIPAA standards are underway</li>
+                </ul>
+              </div>
+              <p className="text-sm font-medium text-red-600 mt-2">
                 ⚠️ Important Disclaimer
               </p>
               <p className="text-sm text-gray-700">
@@ -103,9 +116,7 @@ export default function Header() {
                 >
                   Marcos Rezende
                 </a>.
-              </p>
-              <p className="text-sm text-gray-600">
-                • Not a substitute for professional medical guidance<br/>
+              </p>e<br/>
                 • May contain errors or misinterpretations<br/>
                 • Always consult healthcare professionals<br/>
                 • For reference purposes only
