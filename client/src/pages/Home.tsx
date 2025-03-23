@@ -51,11 +51,15 @@ export default function Home() {
     onError: (error: any) => {
       setIsLoading(false);
       
+      // Get the error message from the error object
+      const errorMessage = error?.message || "Unable to process your image. Please try again.";
+      
       // Determine alert type and user-friendly message
       let variant: "default" | "destructive" | "warning" = "destructive";
       let title = "Unable to read image";
-      let description = "Try taking a new photo with good lighting or use a different image.";
+      let description = errorMessage;
       
+      // Override description for specific error types
       if (error.type === 'size') {
         variant = "warning";
         title = "Image too large";
@@ -63,18 +67,39 @@ export default function Home() {
       } else if (error.type === 'api') {
         variant = "destructive";
         title = "Service temporarily unavailable";
-        description = "Our reading service is busy. Please try again in a few minutes.";
-      } else if (error.message && error.message.includes('format')) {
+        description = errorMessage;
+      } else if (error.type === 'format') {
+        variant = "warning";
+        title = "Problem with image format";
+        description = errorMessage;
+      } else if (errorMessage.includes('format') || errorMessage.includes('image')) {
         variant = "warning";
         title = "Unsupported image format";
         description = "Please use a photo in JPG, PNG format or a PDF document.";
       }
       
+      // Show toast notification
       toast({
         title: title,
         description: description,
         variant: variant
       });
+      
+      // Add error message to the chat
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now() + 2,
+          prescriptionId: null,
+          type: 'system',
+          content: 'error',
+          metadata: { 
+            message: description,
+            errorType: error.type || 'general'
+          },
+          createdAt: new Date()
+        }
+      ]);
     }
   });
 
@@ -97,20 +122,43 @@ export default function Home() {
       ]);
     },
     onError: (error: any) => {
-      // Determine alert type based on error type
+      // Get the error message from the error object
+      const errorMessage = error?.message || "Unable to process your message. Please try again.";
+      
+      // Determine alert type and user-friendly message
       let variant: "default" | "destructive" | "warning" = "destructive";
       let title = "Error sending message";
+      let description = errorMessage;
       
+      // Override description for specific error types
       if (error.type === 'api') {
         variant = "destructive";
-        title = "OpenAI API Error";
+        title = "Service temporarily unavailable";
+        description = errorMessage;
       }
       
+      // Show toast notification
       toast({
         title: title,
-        description: error.message || "Failed to send your message. Please try again.",
+        description: description,
         variant: variant
       });
+      
+      // Add error message to the chat
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now() + 3,
+          prescriptionId: null,
+          type: 'system',
+          content: 'error',
+          metadata: { 
+            message: description,
+            errorType: error.type || 'general'
+          },
+          createdAt: new Date()
+        }
+      ]);
     }
   });
 

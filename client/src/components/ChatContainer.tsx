@@ -6,6 +6,7 @@ import AIMessage from "./messages/AIMessage";
 import AILoadingState from "./messages/AILoadingState";
 import PrescriptionResult from "./messages/PrescriptionResult";
 import FeedbackOptions from "./messages/FeedbackOptions";
+import ErrorMessage from "./messages/ErrorMessage";
 import { Message } from "@shared/schema";
 
 interface ChatContainerProps {
@@ -29,6 +30,14 @@ export default function ChatContainer({ messages, isLoading, onFeedback }: ChatC
       case 'system':
         if (message.content === 'welcome') {
           return <WelcomeCard key={`msg-${message.id}`} />;
+        } else if (message.content === 'error' && message.metadata) {
+          return (
+            <ErrorMessage 
+              key={`msg-${message.id}`}
+              message={message.metadata.message as string}
+              errorType={message.metadata.errorType as string}
+            />
+          );
         }
         return null;
 
