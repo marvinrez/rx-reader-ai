@@ -110,7 +110,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
     const tempInput = document.createElement('input');
     tempInput.type = 'file';
     tempInput.accept = 'image/*,.webp,.pdf';
-    // We don't define capture to open the gallery
+    tempInput.capture = undefined; // Explicitly prevent camera capture
 
     // When the file is selected
     tempInput.onchange = async (e) => {
@@ -183,7 +183,7 @@ export default function UploadModal({ isOpen, onClose, onUpload }: UploadModalPr
             <Image className="h-6 w-6 text-gray-600 group-hover:text-white transition-colors" aria-hidden="true" />
           </div>
           <div className="text-left">
-            <p className="font-medium text-lg">Photos</p>
+            <p className="font-medium text-lg">Photo Library</p>
             <p className="text-sm text-gray-700">Choose from your gallery</p>
           </div>
         </button>
