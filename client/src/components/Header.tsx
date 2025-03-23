@@ -35,7 +35,7 @@ export default function Header() {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-8 w-8 focus:ring-2 focus:ring-primary/50 focus:outline-none"
+            className="h-8 w-8 focus:ring-2 focus:ring-primary/50 focus:outline-none hover:bg-gray-100" // Added hover style
             aria-label="Important disclaimer about AI accuracy"
           >
             <Info className="h-4 w-4" aria-hidden="true" />
