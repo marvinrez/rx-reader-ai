@@ -22,7 +22,7 @@ export default function Header() {
   const [faqOpen, setFaqOpen] = useState(false);
 
   return (
-    <header className="flex items-center justify-between p-[15px] bg-gradient-to-r from-[#E8F5FF] to-[#FFFFFF] border-b border-gray-200">
+    <header className="flex items-center justify-between p-[15px] bg-[#E5F6F6] border-b border-gray-200">
       <div className="flex items-center">
         <div className="w-9 h-9 flex items-center justify-center">
           <img src="/images/app-logo.png" alt="RX Reader logo" className="h-9 w-auto object-contain" />
