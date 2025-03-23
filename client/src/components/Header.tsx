@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import React, { useState } from 'react';
 
-const menuItemStyles = "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none hover:bg-gray-100 focus:bg-[#2A6F62] focus:text-white data-[state=open]:bg-[#2A6F62] data-[state=open]:text-white";
+const menuItemStyles = "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none hover:bg-gray-100 focus:bg-[#2A6F62] focus:text-white data-[state=open]:bg-[#2A6F62] data-[state=open]:text-white data-[highlighted]:bg-[#2A6F62] data-[highlighted]:text-white";
 
 export default function Header() {
   const [aboutOpen, setAboutOpen] = useState(false);
