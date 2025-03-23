@@ -1,3 +1,4 @@
+
 interface DosageLimit {
   min: number;
   max: number;
@@ -5,6 +6,7 @@ interface DosageLimit {
   interactions?: string[];
   pregnancyRisk?: string;
   renalRisk?: string;
+  commonAbbreviations?: string[];
 }
 
 const MEDICATION_LIMITS: Record<string, DosageLimit> = {
@@ -12,6 +14,7 @@ const MEDICATION_LIMITS: Record<string, DosageLimit> = {
     min: 25, 
     max: 100, 
     unit: 'mg',
+    commonAbbreviations: ['cpx', 'cpr'],
     pregnancyRisk: 'Category B - Generally considered safe during pregnancy',
     renalRisk: 'Dose adjustment required for severe renal impairment'
   },
@@ -19,6 +22,7 @@ const MEDICATION_LIMITS: Record<string, DosageLimit> = {
     min: 2.5, 
     max: 60, 
     unit: 'mg',
+    commonAbbreviations: ['pred', 'pdm'],
     interactions: ['anticoagulants', 'nsaids'],
     pregnancyRisk: 'Category C - Use with caution during pregnancy'
   },
@@ -26,34 +30,42 @@ const MEDICATION_LIMITS: Record<string, DosageLimit> = {
     min: 250, 
     max: 1000, 
     unit: 'mg',
+    commonAbbreviations: ['pcm', 'para'],
     interactions: ['warfarin'],
     pregnancyRisk: 'Category A - Safe during pregnancy'
   }
 };
 
-export function validateMedication(name: string, dosage: string): string | null {
+export function validateMedication(name: string, dosage: string): {
+  warning: string | null;
+  interactions?: string[];
+  pregnancyRisk?: string;
+  renalRisk?: string;
+} {
   const medName = name.toLowerCase();
   const limits = MEDICATION_LIMITS[medName];
-
-  if (!limits) return null;
+  
+  if (!limits) return { warning: null };
 
   const dosageMatch = dosage.match(/(\d+(\.\d+)?)\s*(mg|ml|g)/i);
-  if (!dosageMatch) return null;
+  if (!dosageMatch) return { warning: null };
 
   const dosageValue = parseFloat(dosageMatch[1]);
   const dosageUnit = dosageMatch[3].toLowerCase();
 
+  let warning = null;
   if (dosageUnit !== limits.unit) {
-    return `Warning: Expected ${limits.unit} but found ${dosageUnit}`;
+    warning = `Warning: Expected ${limits.unit} but found ${dosageUnit}`;
+  } else if (dosageValue > limits.max) {
+    warning = `Warning: The dosage (${dosageValue}${dosageUnit}) is higher than recommended (${limits.max}${limits.unit})`;
+  } else if (dosageValue < limits.min) {
+    warning = `Warning: The dosage (${dosageValue}${dosageUnit}) is lower than recommended (${limits.min}${limits.unit})`;
   }
 
-  if (dosageValue > limits.max) {
-    return `Warning: The dosage (${dosageValue}${dosageUnit}) is higher than recommended (${limits.max}${limits.unit})`;
-  }
-
-  if (dosageValue < limits.min) {
-    return `Warning: The dosage (${dosageValue}${dosageUnit}) is lower than recommended (${limits.min}${limits.unit})`;
-  }
-
-  return null;
+  return {
+    warning,
+    interactions: limits.interactions,
+    pregnancyRisk: limits.pregnancyRisk,
+    renalRisk: limits.renalRisk
+  };
 }
