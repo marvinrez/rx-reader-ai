@@ -68,7 +68,7 @@ export async function extractMedicationInfo(analysisText: string): Promise<{
     name: string;
     dosage: string;
     instructions?: string;
-    warning?: string;
+    warning?: string | null;
   }>;
   additionalInfo?: string;
   unreadableImage?: boolean;
