@@ -1,7 +1,5 @@
 # RX Reader AI
 
-![RX Reader AI Logo](./client/public/logo.png)
-
 ## Overview
 
 RX Reader AI is an innovative mobile application that transforms prescription management through advanced image recognition and intelligent medical insights. The application leverages cutting-edge AI to analyze and interpret handwritten medical prescriptions, providing users with clear, accessible information about their medications.
@@ -110,8 +108,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-For any inquiries, please reach out at youremail@example.com
+For any inquiries, please reach out at hello@marcosrezende.com
 
 ---
 
-<p align="center">Made with ❤️ for better healthcare</p>
+<p align="center">AI for Good. Made with ❤️ for better healthcare</p>
