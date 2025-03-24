@@ -4,6 +4,8 @@ import { storage } from "./storage";
 import { analyzeImage, getAIResponse } from "./openai";
 import { extractMedicationInfo } from "./openai";
 import { PrescriptionAnalysis } from "@shared/schema";
+import path from "path";
+import fs from "fs";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Analyze prescription image
@@ -173,6 +175,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(500).json({ 
         message: 'We couldn\'t save your feedback. Please try again.'
       });
+    }
+  });
+
+  // Download the project ZIP file
+  app.get('/download-project', (req, res) => {
+    try {
+      const zipFilePath = path.resolve('./rx-reader-ai.zip');
+      
+      // Check if file exists
+      if (!fs.existsSync(zipFilePath)) {
+        console.error('ZIP file not found at path:', zipFilePath);
+        return res.status(404).send('File not found');
+      }
+      
+      // Set appropriate headers
+      res.setHeader('Content-Type', 'application/zip');
+      res.setHeader('Content-Disposition', 'attachment; filename=rx-reader-ai.zip');
+      
+      // Create read stream and pipe to response
+      const fileStream = fs.createReadStream(zipFilePath);
+      fileStream.pipe(res);
+      
+      console.log('ZIP file download started');
+    } catch (error) {
+      console.error('Error during file download:', error);
+      res.status(500).send('Error downloading file');
     }
   });
 
